@@ -228,6 +228,44 @@
             color: var(--accent);
         }
 
+        /* Insight Card */
+        .insight-card {
+            grid-column: span 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .insight-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: var(--text-main);
+        }
+
+        .insight-content h4 {
+            color: var(--primary);
+            margin: 1rem 0 0.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .insight-content h4:first-child {
+            margin-top: 0;
+        }
+
+        .insight-content p {
+            margin-bottom: 0.8rem;
+            color: var(--text-dim);
+            text-align: justify;
+        }
+
+        .highlight {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
         @keyframes fadeInDown {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -318,6 +356,25 @@
                             <!-- Data will be injected here -->
                         </tbody>
                     </table>
+                </div>
+            </div>
+            <div class="card insight-card">
+                <h3>💡 종합 인사이트 분석</h3>
+                <div class="insight-content">
+                    <h4>1. 시장 구조 및 가격 역동성 분석</h4>
+                    <p>본 분석을 통해 확인된 상가 데이터는 전형적인 <span class="highlight">'입지 중심적 가격 형성'</span>과 <span class="highlight">'시장 양극화'</span>의 특징을 보입니다. 보증금과 월세 데이터에서 관찰된 극단적인 편차는 동일한 법정동 내에서도 골목 하나 차이로 자산 가치가 수 배 이상 차이 날 수 있는 상가 부동산의 특수성을 그대로 반영하고 있습니다.</p>
+                    
+                    <h4>2. 업종 및 공간 활용의 트렌드</h4>
+                    <p>음식점과 서비스업이 주를 이루는 가운데 카페나 디저트 전문점 등 트렌드 업종의 매물 회전율이 높게 나타나고 있습니다. 1층 매물의 압도적인 선호도와 함께, 고층부 매물의 목적성 공간(학원, 오피스 등)으로의 분화 현상이 뚜렷합니다. 최근 <span class="highlight">루프탑이나 지하 특화 공간</span>에 대한 수요가 데이터상의 이상치로 포착되는 점은 고정관념을 탈피한 비즈니스 기회를 암시합니다.</p>
+                    
+                    <h4>3. 사용자 행동 데이터의 전략적 가치</h4>
+                    <p>조회수와 찜수의 상관관계 분석은 매물의 매력도를 측정하는 강력한 지표입니다. 플랫폼 운영사는 단순히 조회수가 높은 매물을 상단에 노출하기보다, <span class="highlight">찜 전환율(Favorite Conversion Rate)</span>이 높은 매물을 우선적으로 큐레이션함으로써 실거래 확률을 높이는 전략이 유효합니다.</p>
+                    
+                    <h4>4. 텍스트 마이닝 소구 포인트</h4>
+                    <p>TF-IDF 분석 결과, 임대인은 '수익성'보다 <span class="highlight">'안정성'과 '진입 장벽 완화'</span>를 강조합니다. '무권리', '역세권', '대로변' 등의 키워드가 상위에 랭크된 것은 경기 변동에 민감한 예비 창업자들의 불안 심리를 공략하려는 전략적 선택입니다.</p>
+                    
+                    <h4>5. 전략적 제안</h4>
+                    <p>단순 면적당 단가를 넘어 층수, 도로 인접성 등을 결합한 <span class="highlight">'네모 지수(Nemo Index)'</span>를 개발하여 가치 평가의 투명성을 높여야 합니다. 또한 관리비와 임대료 관계 분석을 바탕으로 '실질 총 유지비'를 상시 노출하여 허위 정보를 방지하고 신뢰도를 확보해야 합니다.</p>
                 </div>
             </div>
         </div>
