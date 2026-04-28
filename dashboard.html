@@ -1,0 +1,428 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEMO 상가 데이터 인사이트 대시보드</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #a855f7;
+            --accent: #f43f5e;
+            --bg: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.15) 0px, transparent 50%);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .header-title h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-title p {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+        }
+
+        .last-updated {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            background: var(--card-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid var(--glass-border);
+        }
+
+        /* KPI Cards */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            border: 1px solid var(--glass-border);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.4);
+        }
+
+        .kpi-card .label {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .kpi-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .kpi-card .trend {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: #10b981;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        /* Chart Grid */
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .chart-grid { grid-template-columns: 1fr; }
+        }
+
+        .chart-card {
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chart-card h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chart-card h3::before {
+            content: '';
+            width: 4px;
+            height: 18px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        canvas {
+            flex: 1;
+        }
+
+        /* Table Section */
+        .table-card {
+            grid-column: span 2;
+            overflow-x: auto;
+        }
+
+        @media (max-width: 1024px) {
+            .table-card { grid-column: span 1; }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th {
+            text-align: left;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            padding: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.95rem;
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        .store-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .store-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 0.5rem;
+            object-fit: cover;
+            background: #334155;
+        }
+
+        .badge {
+            padding: 0.25rem 0.6rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--primary);
+        }
+
+        .view-count {
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-title">
+                <h1>NEMO Data Insights</h1>
+                <p>네모 상가 매물 데이터 심층 분석 대시보드</p>
+            </div>
+            <div class="last-updated">
+                Real-time Analysis • 2026. 04. 28
+            </div>
+        </header>
+
+        <div class="kpi-grid">
+            <div class="card kpi-card">
+                <div class="label">Total Stores</div>
+                <div class="value" id="kpi-total">0</div>
+                <div class="trend">▲ 분석 대상 상가 매물</div>
+            </div>
+            <div class="card kpi-card">
+                <div class="label">Avg. Monthly Rent</div>
+                <div class="value" id="kpi-rent">0</div>
+                <div class="trend">▲ 단위: 만원</div>
+            </div>
+            <div class="card kpi-card">
+                <div class="label">Avg. Deposit</div>
+                <div class="value" id="kpi-deposit">0</div>
+                <div class="trend">▲ 단위: 만원</div>
+            </div>
+            <div class="card kpi-card">
+                <div class="label">Max View Count</div>
+                <div class="value" id="kpi-view">0</div>
+                <div class="trend" style="color: var(--accent);">🔥 실시간 최고 관심도</div>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="card chart-card">
+                <h3>업종별 매물 비중</h3>
+                <canvas id="categoryChart"></canvas>
+            </div>
+            <div class="card chart-card">
+                <h3>주요 지하철역 인근 매물 현황</h3>
+                <canvas id="stationChart"></canvas>
+            </div>
+            <div class="card chart-card">
+                <h3>월세 vs 보증금 상관관계</h3>
+                <canvas id="scatterChart"></canvas>
+            </div>
+            <div class="card chart-card">
+                <h3>층별 매물 분포</h3>
+                <canvas id="floorChart"></canvas>
+            </div>
+
+            <div class="card table-card">
+                <h3>🔥 실시간 인기 매물 TOP 10</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>매물명</th>
+                            <th>업종</th>
+                            <th>임대 조건</th>
+                            <th>조회수</th>
+                        </tr>
+                    </thead>
+                    <tbody id="top-stores-body">
+                        <!-- Data will be injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const data = {"kpis": {"total_count": 2169, "avg_deposit": 57612.13923467036, "avg_rent": 4400.627017058552, "max_view": 1408}, "category_data": [{"business_large_code_name": "기타업종", "count": 1088}, {"business_large_code_name": "일반음식점", "count": 313}, {"business_large_code_name": "서비스업", "count": 281}, {"business_large_code_name": "휴게음식점", "count": 232}, {"business_large_code_name": "오락스포츠", "count": 93}, {"business_large_code_name": "주류점", "count": 84}, {"business_large_code_name": "판매업", "count": 78}], "floor_data": [{"floor": -4, "count": 2}, {"floor": -3, "count": 4}, {"floor": -2, "count": 31}, {"floor": -1, "count": 354}, {"floor": 0, "count": 5}, {"floor": 1, "count": 784}, {"floor": 2, "count": 348}, {"floor": 3, "count": 232}, {"floor": 4, "count": 160}, {"floor": 5, "count": 113}, {"floor": 6, "count": 58}, {"floor": 7, "count": 28}, {"floor": 8, "count": 16}, {"floor": 9, "count": 9}, {"floor": 10, "count": 13}, {"floor": 11, "count": 2}, {"floor": 12, "count": 4}, {"floor": 13, "count": 1}, {"floor": 14, "count": 2}, {"floor": 16, "count": 2}, {"floor": 20, "count": 1}], "scatter_data": [{"deposit": 20000, "monthly_rent": 1200, "size": 59.52}, {"deposit": 20000, "monthly_rent": 1500, "size": 49.75}, {"deposit": 40000, "monthly_rent": 2100, "size": 52.89}, {"deposit": 20000, "monthly_rent": 2000, "size": 46.28}, {"deposit": 20000, "monthly_rent": 1700, "size": 33.06}, {"deposit": 40000, "monthly_rent": 1500, "size": 29.75}, {"deposit": 30000, "monthly_rent": 2050, "size": 39.67}, {"deposit": 30000, "monthly_rent": 1200, "size": 19.83}, {"deposit": 20000, "monthly_rent": 1100, "size": 29.75}, {"deposit": 30000, "monthly_rent": 1300, "size": 33.06}, {"deposit": 30000, "monthly_rent": 1450, "size": 52.89}, {"deposit": 15000, "monthly_rent": 1600, "size": 56.39}, {"deposit": 15000, "monthly_rent": 1430, "size": 59.5}, {"deposit": 70000, "monthly_rent": 5500, "size": 264.46}, {"deposit": 25000, "monthly_rent": 2300, "size": 66.12}, {"deposit": 20000, "monthly_rent": 1800, "size": 50.91}, {"deposit": 20000, "monthly_rent": 2000, "size": 66.12}, {"deposit": 30000, "monthly_rent": 2500, "size": 89.26}, {"deposit": 30000, "monthly_rent": 1800, "size": 85.95}, {"deposit": 20000, "monthly_rent": 2500, "size": 50.0}, {"deposit": 20000, "monthly_rent": 1800, "size": 53.0}, {"deposit": 20000, "monthly_rent": 1640, "size": 50.0}, {"deposit": 15000, "monthly_rent": 1300, "size": 49.59}, {"deposit": 20000, "monthly_rent": 1300, "size": 66.12}, {"deposit": 20000, "monthly_rent": 1900, "size": 59.5}, {"deposit": 10000, "monthly_rent": 1400, "size": 49.59}, {"deposit": 40000, "monthly_rent": 1800, "size": 66.1}, {"deposit": 40000, "monthly_rent": 1900, "size": 66.12}, {"deposit": 20000, "monthly_rent": 1350, "size": 49.59}, {"deposit": 30000, "monthly_rent": 1600, "size": 59.5}, {"deposit": 50000, "monthly_rent": 4480, "size": 224.79}, {"deposit": 40000, "monthly_rent": 2700, "size": 99.17}, {"deposit": 15000, "monthly_rent": 1300, "size": 33.06}, {"deposit": 30000, "monthly_rent": 2500, "size": 89.26}, {"deposit": 30000, "monthly_rent": 2400, "size": 90.91}, {"deposit": 10000, "monthly_rent": 900, "size": 19.83}, {"deposit": 30000, "monthly_rent": 2800, "size": 132.23}, {"deposit": 20000, "monthly_rent": 2200, "size": 42.98}, {"deposit": 30000, "monthly_rent": 2500, "size": 165.29}, {"deposit": 20000, "monthly_rent": 2000, "size": 82.64}, {"deposit": 50000, "monthly_rent": 2700, "size": 109.09}, {"deposit": 20000, "monthly_rent": 2400, "size": 79.34}, {"deposit": 40000, "monthly_rent": 2500, "size": 125.13}, {"deposit": 30000, "monthly_rent": 1900, "size": 49.59}, {"deposit": 20000, "monthly_rent": 1700, "size": 56.2}, {"deposit": 40000, "monthly_rent": 4500, "size": 148.76}, {"deposit": 30000, "monthly_rent": 3000, "size": 138.84}, {"deposit": 31000, "monthly_rent": 3000, "size": 85.95}, {"deposit": 450000, "monthly_rent": 4700, "size": 62.81}, {"deposit": 40000, "monthly_rent": 2500, "size": 39.67}, {"deposit": 50000, "monthly_rent": 4400, "size": 105.79}, {"deposit": 30000, "monthly_rent": 1600, "size": 57.85}, {"deposit": 20000, "monthly_rent": 1500, "size": 33.06}, {"deposit": 60000, "monthly_rent": 6000, "size": 261.16}, {"deposit": 50000, "monthly_rent": 4200, "size": 188.43}, {"deposit": 40000, "monthly_rent": 2050, "size": 105.79}, {"deposit": 50000, "monthly_rent": 4000, "size": 165.29}, {"deposit": 20000, "monthly_rent": 2000, "size": 69.42}, {"deposit": 30000, "monthly_rent": 3000, "size": 82.64}, {"deposit": 30000, "monthly_rent": 1500, "size": 99.17}, {"deposit": 30000, "monthly_rent": 2000, "size": 132.23}, {"deposit": 30000, "monthly_rent": 2000, "size": 132.23}, {"deposit": 30000, "monthly_rent": 2000, "size": 115.7}, {"deposit": 30000, "monthly_rent": 2200, "size": 62.81}, {"deposit": 30000, "monthly_rent": 2050, "size": 39.67}, {"deposit": 40000, "monthly_rent": 2800, "size": 82.64}, {"deposit": 50000, "monthly_rent": 2500, "size": 152.1}, {"deposit": 50000, "monthly_rent": 3200, "size": 105.79}, {"deposit": 30000, "monthly_rent": 1700, "size": 52.89}, {"deposit": 40000, "monthly_rent": 1800, "size": 149.8}, {"deposit": 30000, "monthly_rent": 2650, "size": 115.7}, {"deposit": 20000, "monthly_rent": 1800, "size": 89.26}, {"deposit": 50000, "monthly_rent": 3400, "size": 82.64}, {"deposit": 40000, "monthly_rent": 2200, "size": 99.17}, {"deposit": 40000, "monthly_rent": 2100, "size": 52.89}, {"deposit": 30000, "monthly_rent": 3500, "size": 72.73}, {"deposit": 40000, "monthly_rent": 2700, "size": 99.17}, {"deposit": 30000, "monthly_rent": 2500, "size": 89.26}, {"deposit": 30000, "monthly_rent": 2500, "size": 158.68}, {"deposit": 25000, "monthly_rent": 1500, "size": 105.79}, {"deposit": 40000, "monthly_rent": 2950, "size": 102.48}, {"deposit": 28000, "monthly_rent": 2100, "size": 69.42}, {"deposit": 30000, "monthly_rent": 2800, "size": 152.07}, {"deposit": 30000, "monthly_rent": 2850, "size": 115.7}, {"deposit": 50000, "monthly_rent": 3500, "size": 158.68}, {"deposit": 30000, "monthly_rent": 2600, "size": 135.54}, {"deposit": 40000, "monthly_rent": 2900, "size": 92.56}, {"deposit": 30000, "monthly_rent": 3500, "size": 66.0}, {"deposit": 30000, "monthly_rent": 3500, "size": 140.83}, {"deposit": 60000, "monthly_rent": 4500, "size": 144.0}, {"deposit": 50000, "monthly_rent": 3350, "size": 78.16}, {"deposit": 15000, "monthly_rent": 1650, "size": 43.0}, {"deposit": 40000, "monthly_rent": 3000, "size": 59.5}, {"deposit": 10000, "monthly_rent": 1200, "size": 21.0}, {"deposit": 40000, "monthly_rent": 3100, "size": 115.37}, {"deposit": 20000, "monthly_rent": 2000, "size": 28.78}, {"deposit": 50000, "monthly_rent": 4450, "size": 309.27}, {"deposit": 10500, "monthly_rent": 1050, "size": 36.12}, {"deposit": 20000, "monthly_rent": 1100, "size": 30.0}, {"deposit": 50000, "monthly_rent": 2500, "size": 115.7}, {"deposit": 40000, "monthly_rent": 3600, "size": 148.76}, {"deposit": 35000, "monthly_rent": 2000, "size": 56.2}, {"deposit": 30000, "monthly_rent": 2700, "size": 82.64}, {"deposit": 20000, "monthly_rent": 2500, "size": 148.0}, {"deposit": 100000, "monthly_rent": 6500, "size": 199.54}, {"deposit": 70000, "monthly_rent": 2030, "size": 69.4}, {"deposit": 50000, "monthly_rent": 4400, "size": 175.78}, {"deposit": 40000, "monthly_rent": 2600, "size": 89.3}, {"deposit": 30000, "monthly_rent": 3000, "size": 99.2}, {"deposit": 50000, "monthly_rent": 3500, "size": 85.3}, {"deposit": 40000, "monthly_rent": 2000, "size": 69.4}, {"deposit": 150000, "monthly_rent": 8500, "size": 276.97}, {"deposit": 50000, "monthly_rent": 4500, "size": 163.9}, {"deposit": 40000, "monthly_rent": 3500, "size": 137.07}, {"deposit": 100000, "monthly_rent": 6700, "size": 254.21}, {"deposit": 30000, "monthly_rent": 2500, "size": 89.3}, {"deposit": 30000, "monthly_rent": 2600, "size": 125.6}, {"deposit": 60000, "monthly_rent": 6800, "size": 214.5}, {"deposit": 50000, "monthly_rent": 3270, "size": 167.82}, {"deposit": 200000, "monthly_rent": 16000, "size": 476.58}, {"deposit": 500000, "monthly_rent": 50000, "size": 1405.16}, {"deposit": 200000, "monthly_rent": 18000, "size": 587.18}, {"deposit": 150000, "monthly_rent": 10000, "size": 357.0}, {"deposit": 40000, "monthly_rent": 3500, "size": 159.8}, {"deposit": 59000, "monthly_rent": 5900, "size": 310.56}, {"deposit": 200000, "monthly_rent": 15000, "size": 317.36}, {"deposit": 80000, "monthly_rent": 5900, "size": 183.96}, {"deposit": 80000, "monthly_rent": 7600, "size": 181.82}, {"deposit": 150000, "monthly_rent": 5000, "size": 165.3}, {"deposit": 100000, "monthly_rent": 7300, "size": 244.58}, {"deposit": 200000, "monthly_rent": 20000, "size": 310.65}, {"deposit": 200000, "monthly_rent": 13000, "size": 292.72}, {"deposit": 50000, "monthly_rent": 4000, "size": 138.29}, {"deposit": 60000, "monthly_rent": 5400, "size": 191.67}, {"deposit": 18000, "monthly_rent": 1500, "size": 49.6}, {"deposit": 100000, "monthly_rent": 6800, "size": 192.76}, {"deposit": 30000, "monthly_rent": 3500, "size": 106.75}, {"deposit": 40000, "monthly_rent": 4300, "size": 116.46}, {"deposit": 150000, "monthly_rent": 12870, "size": 432.842}, {"deposit": 450000, "monthly_rent": 39500, "size": 991.54}, {"deposit": 50000, "monthly_rent": 4200, "size": 154.67}, {"deposit": 60000, "monthly_rent": 4800, "size": 191.17}, {"deposit": 200000, "monthly_rent": 15000, "size": 378.72}, {"deposit": 90000, "monthly_rent": 6700, "size": 217.32}, {"deposit": 60000, "monthly_rent": 4600, "size": 226.06}, {"deposit": 40000, "monthly_rent": 6300, "size": 334.06}, {"deposit": 70000, "monthly_rent": 7900, "size": 191.7}, {"deposit": 200000, "monthly_rent": 18000, "size": 456.66}, {"deposit": 80000, "monthly_rent": 6200, "size": 134.71}, {"deposit": 50000, "monthly_rent": 6500, "size": 134.73}, {"deposit": 100000, "monthly_rent": 9000, "size": 228.33}, {"deposit": 35000, "monthly_rent": 2800, "size": 82.7}, {"deposit": 50000, "monthly_rent": 3000, "size": 141.83}, {"deposit": 220000, "monthly_rent": 22000, "size": 401.1}, {"deposit": 100000, "monthly_rent": 12000, "size": 367.55}, {"deposit": 400000, "monthly_rent": 30000, "size": 777.06}, {"deposit": 50000, "monthly_rent": 3500, "size": 140.0}, {"deposit": 30000, "monthly_rent": 2500, "size": 142.2}, {"deposit": 60000, "monthly_rent": 3100, "size": 99.2}, {"deposit": 150000, "monthly_rent": 17000, "size": 371.18}, {"deposit": 100000, "monthly_rent": 8900, "size": 290.14}, {"deposit": 60000, "monthly_rent": 4500, "size": 117.7}, {"deposit": 50000, "monthly_rent": 4000, "size": 178.5}, {"deposit": 50000, "monthly_rent": 4500, "size": 213.71}, {"deposit": 100000, "monthly_rent": 8900, "size": 264.46}, {"deposit": 65000, "monthly_rent": 4400, "size": 159.31}, {"deposit": 65000, "monthly_rent": 4400, "size": 159.31}, {"deposit": 70000, "monthly_rent": 8000, "size": 132.23}, {"deposit": 50000, "monthly_rent": 4600, "size": 177.28}, {"deposit": 50000, "monthly_rent": 3700, "size": 107.34}, {"deposit": 20000, "monthly_rent": 2400, "size": 66.1}, {"deposit": 50000, "monthly_rent": 3100, "size": 140.19}, {"deposit": 60000, "monthly_rent": 4500, "size": 169.09}, {"deposit": 60000, "monthly_rent": 4500, "size": 169.09}, {"deposit": 50000, "monthly_rent": 4000, "size": 120.06}, {"deposit": 150000, "monthly_rent": 11180, "size": 325.01}, {"deposit": 150000, "monthly_rent": 11180, "size": 325.01}, {"deposit": 80000, "monthly_rent": 5600, "size": 194.63}, {"deposit": 100000, "monthly_rent": 6500, "size": 199.54}, {"deposit": 60000, "monthly_rent": 5000, "size": 184.43}, {"deposit": 100000, "monthly_rent": 6900, "size": 212.88}, {"deposit": 100000, "monthly_rent": 8500, "size": 212.88}, {"deposit": 20000, "monthly_rent": 1500, "size": 38.59}, {"deposit": 20000, "monthly_rent": 1850, "size": 109.98}, {"deposit": 30000, "monthly_rent": 2300, "size": 42.98}, {"deposit": 20000, "monthly_rent": 2500, "size": 54.48}, {"deposit": 15000, "monthly_rent": 1500, "size": 49.5868}, {"deposit": 20000, "monthly_rent": 1500, "size": 66.12}, {"deposit": 30000, "monthly_rent": 2250, "size": 69.42}, {"deposit": 20000, "monthly_rent": 1700, "size": 89.26}, {"deposit": 40000, "monthly_rent": 2850, "size": 191.74}, {"deposit": 25000, "monthly_rent": 1800, "size": 118.45}, {"deposit": 30000, "monthly_rent": 2600, "size": 59.5}, {"deposit": 40000, "monthly_rent": 2600, "size": 135.54}, {"deposit": 40000, "monthly_rent": 2400, "size": 59.5}, {"deposit": 35000, "monthly_rent": 2900, "size": 128.02}, {"deposit": 80000, "monthly_rent": 4700, "size": 163.2}, {"deposit": 40000, "monthly_rent": 2940, "size": 53.37}, {"deposit": 50000, "monthly_rent": 4900, "size": 181.8}, {"deposit": 30000, "monthly_rent": 2300, "size": 142.2}, {"deposit": 30000, "monthly_rent": 3000, "size": 125.6198}, {"deposit": 40000, "monthly_rent": 2800, "size": 66.12}, {"deposit": 60000, "monthly_rent": 5000, "size": 165.29}, {"deposit": 30000, "monthly_rent": 2000, "size": 99.2}, {"deposit": 40000, "monthly_rent": 3600, "size": 82.64}, {"deposit": 40000, "monthly_rent": 3400, "size": 161.92}, {"deposit": 20000, "monthly_rent": 2500, "size": 42.98}, {"deposit": 30000, "monthly_rent": 2700, "size": 82.64}, {"deposit": 30000, "monthly_rent": 3100, "size": 99.17}, {"deposit": 30000, "monthly_rent": 3000, "size": 171.9}, {"deposit": 20000, "monthly_rent": 2000, "size": 72.01}, {"deposit": 300000, "monthly_rent": 16000, "size": 121.0242}, {"deposit": 40000, "monthly_rent": 3150, "size": 165.2893}, {"deposit": 100000, "monthly_rent": 6500, "size": 206.74}, {"deposit": 40000, "monthly_rent": 3000, "size": 67.1}, {"deposit": 50000, "monthly_rent": 3200, "size": 82.7}, {"deposit": 40000, "monthly_rent": 3300, "size": 143.3}, {"deposit": 30000, "monthly_rent": 3000, "size": 122.1}, {"deposit": 30000, "monthly_rent": 3200, "size": 73.7}, {"deposit": 50000, "monthly_rent": 2800, "size": 99.2}, {"deposit": 30000, "monthly_rent": 3000, "size": 132.2}, {"deposit": 20000, "monthly_rent": 2000, "size": 66.1}, {"deposit": 30000, "monthly_rent": 2000, "size": 49.59}, {"deposit": 20000, "monthly_rent": 2300, "size": 99.17}, {"deposit": 30000, "monthly_rent": 1900, "size": 42.98}, {"deposit": 30000, "monthly_rent": 2100, "size": 132.23}, {"deposit": 30000, "monthly_rent": 2200, "size": 46.28}, {"deposit": 35000, "monthly_rent": 2300, "size": 52.89}, {"deposit": 70000, "monthly_rent": 5700, "size": 183.32}, {"deposit": 15000, "monthly_rent": 1500, "size": 47.27}, {"deposit": 50000, "monthly_rent": 2900, "size": 54.88}, {"deposit": 10000, "monthly_rent": 1000, "size": 29.75}, {"deposit": 10000, "monthly_rent": 1200, "size": 33.06}, {"deposit": 20000, "monthly_rent": 2200, "size": 33.06}, {"deposit": 20000, "monthly_rent": 1300, "size": 33.1}, {"deposit": 20000, "monthly_rent": 2000, "size": 42.98}, {"deposit": 40000, "monthly_rent": 3000, "size": 59.5}, {"deposit": 20000, "monthly_rent": 1700, "size": 46.28}, {"deposit": 40000, "monthly_rent": 2300, "size": 95.87}, {"deposit": 20000, "monthly_rent": 2300, "size": 46.3}, {"deposit": 25000, "monthly_rent": 1600, "size": 33.1}, {"deposit": 20000, "monthly_rent": 1800, "size": 33.06}, {"deposit": 10000, "monthly_rent": 950, "size": 29.75}, {"deposit": 30000, "monthly_rent": 2500, "size": 95.87}, {"deposit": 20000, "monthly_rent": 1800, "size": 26.45}, {"deposit": 20000, "monthly_rent": 2000, "size": 125.62}, {"deposit": 18000, "monthly_rent": 1500, "size": 49.59}, {"deposit": 15000, "monthly_rent": 1700, "size": 42.98}, {"deposit": 50000, "monthly_rent": 2900, "size": 99.17}, {"deposit": 50000, "monthly_rent": 4500, "size": 135.54}, {"deposit": 20000, "monthly_rent": 2100, "size": 69.4215}, {"deposit": 30000, "monthly_rent": 3000, "size": 112.4}, {"deposit": 50000, "monthly_rent": 2900, "size": 81.02}, {"deposit": 50000, "monthly_rent": 5000, "size": 66.12}, {"deposit": 30000, "monthly_rent": 2000, "size": 39.67}, {"deposit": 30000, "monthly_rent": 2900, "size": 112.4}, {"deposit": 85000, "monthly_rent": 4500, "size": 147.0}, {"deposit": 15000, "monthly_rent": 1600, "size": 56.39}, {"deposit": 50000, "monthly_rent": 3700, "size": 72.7}, {"deposit": 50000, "monthly_rent": 4000, "size": 264.5}, {"deposit": 40000, "monthly_rent": 4500, "size": 181.3}, {"deposit": 30000, "monthly_rent": 3500, "size": 99.1736}, {"deposit": 90000, "monthly_rent": 8700, "size": 169.63}, {"deposit": 100000, "monthly_rent": 7000, "size": 75.28}, {"deposit": 50000, "monthly_rent": 4800, "size": 148.7603}, {"deposit": 70000, "monthly_rent": 7000, "size": 231.405}, {"deposit": 30000, "monthly_rent": 2650, "size": 71.32}, {"deposit": 35000, "monthly_rent": 2300, "size": 70.23}, {"deposit": 50000, "monthly_rent": 4500, "size": 146.1}, {"deposit": 150000, "monthly_rent": 11000, "size": 105.0}, {"deposit": 80000, "monthly_rent": 4600, "size": 55.386}, {"deposit": 70000, "monthly_rent": 6500, "size": 120.636}, {"deposit": 20000, "monthly_rent": 1500, "size": 23.1}, {"deposit": 20000, "monthly_rent": 1500, "size": 47.27}, {"deposit": 30000, "monthly_rent": 3600, "size": 148.8}, {"deposit": 32000, "monthly_rent": 2700, "size": 92.6}, {"deposit": 50000, "monthly_rent": 4300, "size": 150.4}, {"deposit": 10000, "monthly_rent": 1500, "size": 29.8}, {"deposit": 15000, "monthly_rent": 1650, "size": 43.0}, {"deposit": 100000, "monthly_rent": 9000, "size": 193.42}, {"deposit": 110000, "monthly_rent": 9500, "size": 218.2}, {"deposit": 120000, "monthly_rent": 10000, "size": 242.91}, {"deposit": 120000, "monthly_rent": 10000, "size": 242.91}, {"deposit": 30000, "monthly_rent": 2500, "size": 91.26}, {"deposit": 30000, "monthly_rent": 2300, "size": 142.2}, {"deposit": 30000, "monthly_rent": 2400, "size": 76.0}, {"deposit": 20000, "monthly_rent": 1380, "size": 86.0}, {"deposit": 80000, "monthly_rent": 7000, "size": 221.4876}, {"deposit": 40000, "monthly_rent": 2800, "size": 109.59}, {"deposit": 70000, "monthly_rent": 5700, "size": 183.32}, {"deposit": 50000, "monthly_rent": 4300, "size": 170.93}, {"deposit": 50000, "monthly_rent": 4500, "size": 174.76}, {"deposit": 50000, "monthly_rent": 4200, "size": 229.0}, {"deposit": 30000, "monthly_rent": 2100, "size": 133.78}, {"deposit": 20000, "monthly_rent": 1200, "size": 72.7}, {"deposit": 10000, "monthly_rent": 1050, "size": 33.1}, {"deposit": 20000, "monthly_rent": 1750, "size": 69.4}, {"deposit": 20000, "monthly_rent": 2100, "size": 76.53}, {"deposit": 120000, "monthly_rent": 10000, "size": 132.23}, {"deposit": 50000, "monthly_rent": 4000, "size": 125.62}, {"deposit": 20000, "monthly_rent": 2000, "size": 59.5}, {"deposit": 50000, "monthly_rent": 4000, "size": 195.04}, {"deposit": 200000, "monthly_rent": 13900, "size": 115.7}, {"deposit": 30000, "monthly_rent": 3000, "size": 132.23}, {"deposit": 60000, "monthly_rent": 5000, "size": 67.44}, {"deposit": 200000, "monthly_rent": 18000, "size": 429.75}, {"deposit": 100000, "monthly_rent": 9000, "size": 102.15}, {"deposit": 170000, "monthly_rent": 8500, "size": 452.56}, {"deposit": 500000, "monthly_rent": 25000, "size": 677.69}, {"deposit": 30000, "monthly_rent": 1350, "size": 19.8}, {"deposit": 50000, "monthly_rent": 3100, "size": 35.1}, {"deposit": 25000, "monthly_rent": 2000, "size": 49.55}, {"deposit": 50000, "monthly_rent": 3800, "size": 231.4}, {"deposit": 25000, "monthly_rent": 1800, "size": 115.7}, {"deposit": 30000, "monthly_rent": 1800, "size": 85.87}, {"deposit": 50000, "monthly_rent": 2700, "size": 141.83}, {"deposit": 30000, "monthly_rent": 1700, "size": 66.1157}, {"deposit": 20000, "monthly_rent": 2250, "size": 145.45}, {"deposit": 60000, "monthly_rent": 4800, "size": 297.52}, {"deposit": 50000, "monthly_rent": 2250, "size": 149.49}, {"deposit": 30000, "monthly_rent": 2200, "size": 132.23}, {"deposit": 50000, "monthly_rent": 4000, "size": 277.25}, {"deposit": 20000, "monthly_rent": 1900, "size": 155.37}, {"deposit": 80000, "monthly_rent": 6000, "size": 125.79}, {"deposit": 70000, "monthly_rent": 3000, "size": 281.0}, {"deposit": 30000, "monthly_rent": 2300, "size": 139.5}, {"deposit": 30000, "monthly_rent": 2500, "size": 160.84}, {"deposit": 50000, "monthly_rent": 4200, "size": 154.3802}, {"deposit": 16750, "monthly_rent": 1680, "size": 56.2}, {"deposit": 50000, "monthly_rent": 3000, "size": 163.24}, {"deposit": 70000, "monthly_rent": 4900, "size": 112.3967}, {"deposit": 60000, "monthly_rent": 4000, "size": 125.6198}, {"deposit": 20000, "monthly_rent": 1000, "size": 54.06}, {"deposit": 30000, "monthly_rent": 1400, "size": 26.45}, {"deposit": 30000, "monthly_rent": 1900, "size": 34.875}, {"deposit": 50000, "monthly_rent": 4500, "size": 137.47}, {"deposit": 100000, "monthly_rent": 6200, "size": 246.81}, {"deposit": 100000, "monthly_rent": 6200, "size": 246.81}, {"deposit": 100000, "monthly_rent": 5500, "size": 246.92}, {"deposit": 75000, "monthly_rent": 7500, "size": 251.31}, {"deposit": 85000, "monthly_rent": 8500, "size": 252.77}, {"deposit": 40000, "monthly_rent": 2100, "size": 62.23}, {"deposit": 30000, "monthly_rent": 2000, "size": 115.0}, {"deposit": 20000, "monthly_rent": 1200, "size": 49.6}, {"deposit": 154500, "monthly_rent": 12510, "size": 270.7107}, {"deposit": 70000, "monthly_rent": 6500, "size": 119.01}, {"deposit": 30000, "monthly_rent": 3000, "size": 112.32}, {"deposit": 150000, "monthly_rent": 8500, "size": 120.636}, {"deposit": 20000, "monthly_rent": 2200, "size": 33.06}, {"deposit": 80000, "monthly_rent": 3700, "size": 74.3}, {"deposit": 50000, "monthly_rent": 4000, "size": 116.76}, {"deposit": 30000, "monthly_rent": 3000, "size": 49.16}, {"deposit": 100000, "monthly_rent": 5680, "size": 144.4}, {"deposit": 100000, "monthly_rent": 6100, "size": 119.42}, {"deposit": 40000, "monthly_rent": 2900, "size": 149.56}, {"deposit": 30000, "monthly_rent": 2000, "size": 99.17}, {"deposit": 30000, "monthly_rent": 2500, "size": 99.17}, {"deposit": 30000, "monthly_rent": 1850, "size": 30.69}, {"deposit": 50000, "monthly_rent": 2350, "size": 49.58}, {"deposit": 55000, "monthly_rent": 2600, "size": 78.54}, {"deposit": 30000, "monthly_rent": 3950, "size": 39.67}, {"deposit": 30000, "monthly_rent": 2500, "size": 82.6446}, {"deposit": 30000, "monthly_rent": 2650, "size": 86.4}, {"deposit": 50000, "monthly_rent": 4500, "size": 103.52}, {"deposit": 20000, "monthly_rent": 2500, "size": 49.36}, {"deposit": 30000, "monthly_rent": 2500, "size": 36.36}, {"deposit": 60000, "monthly_rent": 3600, "size": 40.0}, {"deposit": 30000, "monthly_rent": 5000, "size": 84.39}, {"deposit": 30000, "monthly_rent": 2500, "size": 33.0}, {"deposit": 20000, "monthly_rent": 2600, "size": 148.76}, {"deposit": 35000, "monthly_rent": 3200, "size": 115.7}, {"deposit": 80000, "monthly_rent": 5000, "size": 119.0}, {"deposit": 70000, "monthly_rent": 5300, "size": 105.8}, {"deposit": 40000, "monthly_rent": 3100, "size": 115.7}, {"deposit": 80000, "monthly_rent": 2750, "size": 66.1}, {"deposit": 50000, "monthly_rent": 3100, "size": 119.0}, {"deposit": 50000, "monthly_rent": 4500, "size": 94.99}, {"deposit": 40000, "monthly_rent": 4530, "size": 208.2645}, {"deposit": 20000, "monthly_rent": 3000, "size": 99.1736}, {"deposit": 10000, "monthly_rent": 2200, "size": 33.0579}, {"deposit": 30000, "monthly_rent": 2500, "size": 181.82}, {"deposit": 30000, "monthly_rent": 3600, "size": 150.07}, {"deposit": 10000, "monthly_rent": 1100, "size": 82.64}, {"deposit": 70000, "monthly_rent": 4760, "size": 111.74}, {"deposit": 20000, "monthly_rent": 2100, "size": 66.1}, {"deposit": 150000, "monthly_rent": 13100, "size": 383.73}, {"deposit": 40000, "monthly_rent": 2750, "size": 192.04}, {"deposit": 150000, "monthly_rent": 13100, "size": 383.73}, {"deposit": 35000, "monthly_rent": 3700, "size": 94.743}, {"deposit": 80000, "monthly_rent": 5000, "size": 150.993}, {"deposit": 10000, "monthly_rent": 880, "size": 28.08}, {"deposit": 10000, "monthly_rent": 1600, "size": 66.0}, {"deposit": 30000, "monthly_rent": 3500, "size": 85.4}, {"deposit": 60000, "monthly_rent": 4300, "size": 102.4793}, {"deposit": 50000, "monthly_rent": 2500, "size": 71.65}, {"deposit": 30000, "monthly_rent": 3000, "size": 165.3}, {"deposit": 30000, "monthly_rent": 2500, "size": 148.8}, {"deposit": 30000, "monthly_rent": 3500, "size": 49.16}, {"deposit": 30000, "monthly_rent": 3080, "size": 78.43}, {"deposit": 65000, "monthly_rent": 3400, "size": 33.06}, {"deposit": 100000, "monthly_rent": 8000, "size": 231.4}, {"deposit": 20000, "monthly_rent": 1850, "size": 27.29}, {"deposit": 50000, "monthly_rent": 3950, "size": 84.86}, {"deposit": 80000, "monthly_rent": 5200, "size": 147.79}, {"deposit": 20000, "monthly_rent": 1900, "size": 99.27}, {"deposit": 30000, "monthly_rent": 3500, "size": 263.22}, {"deposit": 35000, "monthly_rent": 2300, "size": 52.9}, {"deposit": 20000, "monthly_rent": 2400, "size": 66.1}, {"deposit": 60000, "monthly_rent": 3300, "size": 155.4}, {"deposit": 20000, "monthly_rent": 2000, "size": 99.2}, {"deposit": 80000, "monthly_rent": 6000, "size": 115.7}, {"deposit": 50000, "monthly_rent": 5000, "size": 158.7}, {"deposit": 300000, "monthly_rent": 27000, "size": 717.2}, {"deposit": 25000, "monthly_rent": 18000, "size": 523.37}, {"deposit": 90000, "monthly_rent": 9300, "size": 200.97}, {"deposit": 40000, "monthly_rent": 3700, "size": 77.3}, {"deposit": 50000, "monthly_rent": 4000, "size": 95.92}, {"deposit": 50000, "monthly_rent": 4300, "size": 181.8}, {"deposit": 150000, "monthly_rent": 13000, "size": 297.52}, {"deposit": 163000, "monthly_rent": 8500, "size": 224.79}, {"deposit": 65000, "monthly_rent": 5250, "size": 165.0}, {"deposit": 65000, "monthly_rent": 5250, "size": 165.0}, {"deposit": 50000, "monthly_rent": 4000, "size": 85.85}, {"deposit": 50000, "monthly_rent": 4000, "size": 158.6}, {"deposit": 60000, "monthly_rent": 5000, "size": 194.4}, {"deposit": 100000, "monthly_rent": 7500, "size": 206.8}, {"deposit": 120000, "monthly_rent": 9000, "size": 264.46}, {"deposit": 50000, "monthly_rent": 4400, "size": 132.2}, {"deposit": 150000, "monthly_rent": 12600, "size": 270.1}, {"deposit": 30000, "monthly_rent": 3300, "size": 115.7}, {"deposit": 100000, "monthly_rent": 9000, "size": 300.0}, {"deposit": 50000, "monthly_rent": 4300, "size": 181.8}, {"deposit": 30000, "monthly_rent": 2700, "size": 99.2}, {"deposit": 100000, "monthly_rent": 6300, "size": 206.66}, {"deposit": 50000, "monthly_rent": 3600, "size": 132.2}, {"deposit": 50000, "monthly_rent": 5700, "size": 132.23}, {"deposit": 75000, "monthly_rent": 6500, "size": 148.76}, {"deposit": 40000, "monthly_rent": 4000, "size": 115.9}, {"deposit": 70000, "monthly_rent": 5600, "size": 165.3}, {"deposit": 68000, "monthly_rent": 6400, "size": 207.9}, {"deposit": 60000, "monthly_rent": 4100, "size": 82.6446}, {"deposit": 50000, "monthly_rent": 3950, "size": 80.7}, {"deposit": 15000, "monthly_rent": 1500, "size": 25.0}, {"deposit": 50000, "monthly_rent": 3100, "size": 86.87}, {"deposit": 20000, "monthly_rent": 1500, "size": 23.3739}, {"deposit": 15000, "monthly_rent": 1010, "size": 57.8}, {"deposit": 50000, "monthly_rent": 5300, "size": 156.77}, {"deposit": 50000, "monthly_rent": 5480, "size": 156.77}, {"deposit": 5000, "monthly_rent": 700, "size": 13.2}, {"deposit": 40000, "monthly_rent": 4000, "size": 209.31}, {"deposit": 30000, "monthly_rent": 2900, "size": 70.19}, {"deposit": 50000, "monthly_rent": 3100, "size": 140.19}, {"deposit": 20000, "monthly_rent": 1950, "size": 39.66}, {"deposit": 30000, "monthly_rent": 2310, "size": 123.3}, {"deposit": 30000, "monthly_rent": 2200, "size": 74.18}, {"deposit": 50000, "monthly_rent": 3100, "size": 35.1}, {"deposit": 15000, "monthly_rent": 1300, "size": 26.45}, {"deposit": 10000, "monthly_rent": 1000, "size": 116.47}, {"deposit": 80000, "monthly_rent": 7000, "size": 287.66}, {"deposit": 30000, "monthly_rent": 3000, "size": 99.17}, {"deposit": 20000, "monthly_rent": 2200, "size": 36.36}, {"deposit": 60000, "monthly_rent": 3450, "size": 72.73}, {"deposit": 40000, "monthly_rent": 2000, "size": 66.12}, {"deposit": 16000, "monthly_rent": 1250, "size": 95.9}, {"deposit": 90000, "monthly_rent": 7000, "size": 228.0}, {"deposit": 100000, "monthly_rent": 6500, "size": 95.87}, {"deposit": 20000, "monthly_rent": 1900, "size": 105.525}, {"deposit": 100000, "monthly_rent": 6500, "size": 35.19}, {"deposit": 15000, "monthly_rent": 1000, "size": 51.968}, {"deposit": 20000, "monthly_rent": 1300, "size": 21.483}, {"deposit": 40000, "monthly_rent": 2600, "size": 33.06}, {"deposit": 50000, "monthly_rent": 2500, "size": 33.06}, {"deposit": 20000, "monthly_rent": 1700, "size": 93.93}, {"deposit": 100000, "monthly_rent": 4780, "size": 262.67}, {"deposit": 20000, "monthly_rent": 1400, "size": 40.0}, {"deposit": 30000, "monthly_rent": 2000, "size": 29.785}, {"deposit": 20000, "monthly_rent": 850, "size": 46.433}, {"deposit": 20000, "monthly_rent": 1200, "size": 99.043}, {"deposit": 20000, "monthly_rent": 1700, "size": 93.93}, {"deposit": 30000, "monthly_rent": 2700, "size": 40.011}, {"deposit": 30000, "monthly_rent": 1700, "size": 34.875}, {"deposit": 20000, "monthly_rent": 1700, "size": 29.75}, {"deposit": 50000, "monthly_rent": 2900, "size": 56.2}, {"deposit": 10000, "monthly_rent": 880, "size": 28.08}, {"deposit": 150000, "monthly_rent": 11000, "size": 122.72}, {"deposit": 46000, "monthly_rent": 2800, "size": 71.51}, {"deposit": 47000, "monthly_rent": 2900, "size": 103.57}, {"deposit": 60000, "monthly_rent": 4500, "size": 181.82}, {"deposit": 60000, "monthly_rent": 4500, "size": 181.82}, {"deposit": 100000, "monthly_rent": 7500, "size": 214.57}, {"deposit": 200000, "monthly_rent": 12000, "size": 312.51}, {"deposit": 50000, "monthly_rent": 3900, "size": 204.11}, {"deposit": 40000, "monthly_rent": 2500, "size": 145.41}, {"deposit": 200000, "monthly_rent": 15000, "size": 428.11}, {"deposit": 45000, "monthly_rent": 4200, "size": 141.75}, {"deposit": 100000, "monthly_rent": 9000, "size": 174.44}, {"deposit": 65000, "monthly_rent": 4200, "size": 149.73}, {"deposit": 50000, "monthly_rent": 2500, "size": 149.64}, {"deposit": 30000, "monthly_rent": 3000, "size": 151.2}, {"deposit": 60000, "monthly_rent": 4600, "size": 112.6}], "top_stores": [{"title": "신논현역 역세권, 깔끔한 인테리어, SNS 핫플레이스 대여 스페이스", "business_middle_code_name": "기타서비스업", "deposit": 4000, "monthly_rent": 150, "view_count": 1408, "preview_photo_url": "https://img.nemoapp.kr/article-photos/c29f4c17-1dd4-44f4-95ba-cc0a0aa44213/s.jpg"}, {"title": "서초동 강남역, 양재역 도보 10분 내외 더블 역세권 공실", "business_middle_code_name": "기타창업모음", "deposit": 10000, "monthly_rent": 1000, "view_count": 1359, "preview_photo_url": "https://img.nemoapp.kr/article-photos/d9a9436d-e8a9-4faa-8a81-e95b609725cc/s.jpg"}, {"title": "신논현역 접근성 좋은 논현동 ❤️복층 ❤️상가", "business_middle_code_name": "다용도점포", "deposit": 50000, "monthly_rent": 3000, "view_count": 1354, "preview_photo_url": "https://img.nemoapp.kr/article-photos/cb1032b5-0c06-4492-bb88-efd540af296c/s.jpg"}, {"title": "대로변 코너, 양재종합시장에 위치한 초역세권  지층 양재동 공실", "business_middle_code_name": "기타창업모음", "deposit": 10000, "monthly_rent": 600, "view_count": 1326, "preview_photo_url": "https://img.nemoapp.kr/article-photos/a0673476-9ad1-479f-8740-bd164c5cb9e7/s.jpg"}, {"title": "강남역 인근 역세권 파티룸", "business_middle_code_name": "기타창업모음", "deposit": 5000, "monthly_rent": 700, "view_count": 1140, "preview_photo_url": "https://img.nemoapp.kr/article-photos/a5b480f6-2a56-44d8-8aa4-3bc695ae7955/s.jpg"}, {"title": "강남역 역세권, 예약 폭주, 트렌디한 인테리어의 대여 스페이스", "business_middle_code_name": "기타서비스업", "deposit": 10000, "monthly_rent": 900, "view_count": 1117, "preview_photo_url": "https://img.nemoapp.kr/article-photos/7eba60e0-9ef8-4e78-a6f2-ed1bebf7b9f0/s.jpg"}, {"title": "강남역 역세권, 깔끔한 인테리어, 촬영 시설 완비된 대여 스튜디오", "business_middle_code_name": "기타서비스업", "deposit": 5000, "monthly_rent": 450, "view_count": 1108, "preview_photo_url": "https://img.nemoapp.kr/article-photos/b035079c-554c-4744-8946-073400e1d7d5/s.jpg"}, {"title": "선릉역 역세권, 트렌디한 인테리어, 주방 시설 완비된 일식당", "business_middle_code_name": "일식점", "deposit": 20000, "monthly_rent": 2000, "view_count": 1097, "preview_photo_url": "https://img.nemoapp.kr/article-photos/2ad55253-5cad-455a-8152-c0ca535973a3/s.jpg"}, {"title": "강남역거리 메인상권에 위치한 역삼동 1층 카페", "business_middle_code_name": "커피점/카페", "deposit": 130000, "monthly_rent": 5000, "view_count": 1050, "preview_photo_url": "https://img.nemoapp.kr/article-photos/0b6275ce-d545-45cd-abcb-47a8b8cd3cf6/s.jpg"}, {"title": "강남역 역세권, 시설, 인테리어 완비, 배달, 단체 주문 많은 분식집", "business_middle_code_name": "떢볶이/튀김", "deposit": 30000, "monthly_rent": 2300, "view_count": 1021, "preview_photo_url": "https://img.nemoapp.kr/article-photos/e63718b2-0603-47d3-842d-8e8c2adc55fd/s.jpg"}], "station_data": [{"name": "역삼역", "count": 395}, {"name": "언주역", "count": 253}, {"name": "신논현역", "count": 226}, {"name": "강남역", "count": 216}, {"name": "선릉역", "count": 211}, {"name": "논현역", "count": 149}, {"name": "선정릉역", "count": 135}, {"name": "학동역", "count": 123}, {"name": "양재(서초구청)역", "count": 109}, {"name": "삼성중앙역", "count": 90}, {"name": "한티역", "count": 54}, {"name": "매봉역", "count": 47}, {"name": "양재역(서초구청)", "count": 47}, {"name": "강남구청역", "count": 45}, {"name": "신사역", "count": 20}]};
+
+        // KPI Injection
+        document.getElementById('kpi-total').textContent = data.kpis.total_count.toLocaleString();
+        document.getElementById('kpi-rent').textContent = Math.round(data.kpis.avg_rent).toLocaleString();
+        document.getElementById('kpi-deposit').textContent = Math.round(data.kpis.avg_deposit).toLocaleString();
+        document.getElementById('kpi-view').textContent = data.kpis.max_view.toLocaleString();
+
+        // Chart.js Default Config
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = "'Outfit', sans-serif";
+
+        // 1. Category Chart
+        new Chart(document.getElementById('categoryChart'), {
+            type: 'doughnut',
+            data: {
+                labels: data.category_data.map(d => d.business_large_code_name),
+                datasets: [{
+                    data: data.category_data.map(d => d.count),
+                    backgroundColor: ['#6366f1', '#a855f7', '#f43f5e', '#fbbf24', '#10b981', '#3b82f6', '#ec4899', '#8b5cf6', '#06b6d4', '#f97316'],
+                    borderWidth: 0,
+                    hoverOffset: 20
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right' }
+                }
+            }
+        });
+
+        // 2. Station Chart
+        new Chart(document.getElementById('stationChart'), {
+            type: 'bar',
+            data: {
+                labels: data.station_data.map(d => d.name),
+                datasets: [{
+                    label: '매물 수',
+                    data: data.station_data.map(d => d.count),
+                    backgroundColor: 'rgba(168, 85, 247, 0.6)',
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+                }
+            }
+        });
+
+        // 3. Scatter Chart
+        new Chart(document.getElementById('scatterChart'), {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: '매물',
+                    data: data.scatter_data.map(d => ({ x: d.deposit, y: d.monthly_rent })),
+                    backgroundColor: 'rgba(99, 102, 241, 0.5)',
+                    pointRadius: 4,
+                    hoverRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { title: { display: true, text: '보증금 (만원)' }, grid: { color: 'rgba(255, 255, 255, 0.05)' } },
+                    y: { title: { display: true, text: '월세 (만원)' }, grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+                }
+            }
+        });
+
+        // 4. Floor Chart
+        new Chart(document.getElementById('floorChart'), {
+            type: 'line',
+            data: {
+                labels: data.floor_data.map(d => d.floor + '층'),
+                datasets: [{
+                    label: '매물 수',
+                    data: data.floor_data.map(d => d.count),
+                    borderColor: '#f43f5e',
+                    backgroundColor: 'rgba(244, 63, 94, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+                }
+            }
+        });
+
+        // 5. Table Injection
+        const tbody = document.getElementById('top-stores-body');
+        data.top_stores.forEach(store => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>
+                    <div class="store-item">
+                        <img src="${store.preview_photo_url || 'https://via.placeholder.com/40'}" class="store-img" onerror="this.src='https://via.placeholder.com/40'">
+                        <span>${store.title}</span>
+                    </div>
+                </td>
+                <td><span class="badge">${store.business_middle_code_name}</span></td>
+                <td>보 ${store.deposit.toLocaleString()} / 월 ${store.monthly_rent.toLocaleString()}</td>
+                <td><span class="view-count">${store.view_count.toLocaleString()}</span></td>
+            `;
+            tbody.appendChild(tr);
+        });
+    </script>
+</body>
+</html>
+    
