@@ -32,42 +32,46 @@
                 radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.15) 0px, transparent 50%);
             color: var(--text-main);
-            min-height: 100vh;
-            padding: 2rem;
+            height: 100vh;
+            padding: 1rem;
+            overflow: hidden; /* 한 화면에 고정 */
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         header {
-            margin-bottom: 3rem;
+            margin-bottom: 1rem;
             display: flex;
             justify-content: space-between;
-            align-items: flex-end;
+            align-items: center;
             animation: fadeInDown 0.8s ease-out;
+            flex-shrink: 0;
         }
 
         .header-title h1 {
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
             background: linear-gradient(to right, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
         }
 
         .header-title p {
             color: var(--text-dim);
-            font-size: 1.1rem;
+            font-size: 0.9rem;
         }
 
         .last-updated {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: var(--text-dim);
             background: var(--card-bg);
-            padding: 0.5rem 1rem;
+            padding: 0.3rem 0.8rem;
             border-radius: 2rem;
             border: 1px solid var(--glass-border);
         }
@@ -75,41 +79,41 @@
         /* KPI Cards */
         .kpi-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-shrink: 0;
         }
 
         .card {
             background: var(--card-bg);
             backdrop-filter: blur(12px);
-            border-radius: 1.5rem;
-            padding: 1.5rem;
+            border-radius: 1rem;
+            padding: 1rem;
             border: 1px solid var(--glass-border);
             transition: transform 0.3s ease, border-color 0.3s ease;
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             border-color: rgba(99, 102, 241, 0.4);
         }
 
         .kpi-card .label {
             color: var(--text-dim);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.2rem;
         }
 
         .kpi-card .value {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 700;
         }
 
         .kpi-card .trend {
-            margin-top: 0.5rem;
-            font-size: 0.85rem;
+            margin-top: 0.2rem;
+            font-size: 0.75rem;
             color: #10b981;
             display: flex;
             align-items: center;
@@ -119,92 +123,101 @@
         /* Chart Grid */
         .chart-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(3, 1fr); /* 3열 레이아웃으로 변경 */
+            grid-template-rows: auto 1fr;
+            gap: 1rem;
+            flex: 1;
+            min-height: 0; /* flex 자식의 overflow 허용을 위함 */
         }
 
-        @media (max-width: 1024px) {
-            .chart-grid { grid-template-columns: 1fr; }
+        @media (max-width: 1200px) {
+            .chart-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
         .chart-card {
-            min-height: 400px;
             display: flex;
             flex-direction: column;
+            min-height: 0;
         }
 
         .chart-card h3 {
-            margin-bottom: 1.5rem;
-            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
 
         .chart-card h3::before {
             content: '';
-            width: 4px;
-            height: 18px;
+            width: 3px;
+            height: 14px;
             background: var(--primary);
             border-radius: 2px;
         }
 
-        canvas {
+        .chart-container {
             flex: 1;
+            position: relative;
+            min-height: 0;
         }
 
         /* Table Section */
         .table-card {
-            grid-column: span 2;
-            overflow-x: auto;
+            grid-column: span 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
         }
 
-        @media (max-width: 1024px) {
-            .table-card { grid-column: span 1; }
+        .table-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            margin-top: 0.5rem;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 1rem;
         }
 
         th {
+            position: sticky;
+            top: 0;
+            background: #1e293b;
             text-align: left;
             color: var(--text-dim);
-            font-size: 0.85rem;
-            padding: 1rem;
+            font-size: 0.75rem;
+            padding: 0.8rem;
             border-bottom: 1px solid var(--glass-border);
+            z-index: 10;
         }
 
         td {
-            padding: 1rem;
+            padding: 0.8rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 0.95rem;
+            font-size: 0.85rem;
         }
-
-        tr:last-child td { border-bottom: none; }
 
         .store-item {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.8rem;
         }
 
         .store-img {
-            width: 40px;
-            height: 40px;
-            border-radius: 0.5rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 0.4rem;
             object-fit: cover;
             background: #334155;
         }
 
         .badge {
-            padding: 0.25rem 0.6rem;
-            border-radius: 0.5rem;
-            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.4rem;
+            font-size: 0.7rem;
             font-weight: 600;
             background: rgba(99, 102, 241, 0.2);
             color: var(--primary);
@@ -216,15 +229,16 @@
         }
 
         @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
+            from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         /* Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
     </style>
 </head>
 <body>
@@ -265,36 +279,46 @@
         <div class="chart-grid">
             <div class="card chart-card">
                 <h3>업종별 매물 비중</h3>
-                <canvas id="categoryChart"></canvas>
+                <div class="chart-container">
+                    <canvas id="categoryChart"></canvas>
+                </div>
             </div>
             <div class="card chart-card">
                 <h3>주요 지하철역 인근 매물 현황</h3>
-                <canvas id="stationChart"></canvas>
+                <div class="chart-container">
+                    <canvas id="stationChart"></canvas>
+                </div>
             </div>
             <div class="card chart-card">
                 <h3>월세 vs 보증금 상관관계</h3>
-                <canvas id="scatterChart"></canvas>
+                <div class="chart-container">
+                    <canvas id="scatterChart"></canvas>
+                </div>
             </div>
             <div class="card chart-card">
                 <h3>층별 매물 분포</h3>
-                <canvas id="floorChart"></canvas>
+                <div class="chart-container">
+                    <canvas id="floorChart"></canvas>
+                </div>
             </div>
 
             <div class="card table-card">
                 <h3>🔥 실시간 인기 매물 TOP 10</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>매물명</th>
-                            <th>업종</th>
-                            <th>임대 조건</th>
-                            <th>조회수</th>
-                        </tr>
-                    </thead>
-                    <tbody id="top-stores-body">
-                        <!-- Data will be injected here -->
-                    </tbody>
-                </table>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>매물명</th>
+                                <th>업종</th>
+                                <th>임대 조건</th>
+                                <th>조회수</th>
+                            </tr>
+                        </thead>
+                        <tbody id="top-stores-body">
+                            <!-- Data will be injected here -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
