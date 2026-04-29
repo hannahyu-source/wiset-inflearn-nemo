@@ -9,7 +9,7 @@ style: |
   section {
     font-family: 'Malgun Gothic', sans-serif;
     background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-    padding: 80px 70px 110px 70px;
+    padding: 70px 70px 110px 70px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -33,7 +33,7 @@ style: |
     -webkit-backdrop-filter: blur(25px);
     border-radius: 32px;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 40px;
+    padding: 35px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
     z-index: 1;
     display: flex;
@@ -41,22 +41,22 @@ style: |
     justify-content: center;
   }
   h1 {
-    font-size: 45px;
+    font-size: 42px;
     color: #ffffff;
-    margin: 0 0 15px 0;
+    margin: 0 0 10px 0;
     font-weight: 800;
   }
   h2, h3 {
-    font-size: 28px;
+    font-size: 26px;
     color: #00d2ff;
     margin: 5px 0;
     font-weight: 700;
   }
   p, li {
-    font-size: 18px;
+    font-size: 17px;
     color: #f0f0f0;
-    line-height: 1.5;
-    margin: 5px 0;
+    line-height: 1.4;
+    margin: 4px 0;
   }
   ul {
     margin-left: 20px;
@@ -70,10 +70,10 @@ style: |
     margin-left: -1.5em;
   }
   img {
-    max-height: 250px;
+    max-height: 280px; /* 10% 추가 확대 (250px -> 280px) */
     width: auto;
     display: block;
-    margin: 15px auto;
+    margin: 12px auto;
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.3);
   }
