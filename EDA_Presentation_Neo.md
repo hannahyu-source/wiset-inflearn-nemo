@@ -2,48 +2,73 @@
 marp: true
 theme: default
 paginate: true
-backgroundColor: #1a1a2e
-header: "NEMO EDA : GLASSMORPHISM EDITION"
+backgroundColor: #0f0c29
+header: "NEMO EDA : AUTHENTIC GLASSMORPHISM"
 footer: "© 2026 PREMIUM DATA DASHBOARD"
 style: |
   section {
-    font-family: 'Malgun Gothic', sans-serif;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+    /* 딥 그라디언트 배경 */
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
     padding: 80px 70px 110px 70px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     color: #ffffff;
     word-break: keep-all;
+    overflow: hidden;
   }
-  /* 유리 박스 효과 */
+  /* 배경 기하학 도형 효과 */
   section::before {
     content: "";
     position: absolute;
-    top: 50px; left: 50px; right: 50px; bottom: 80px;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(15px);
-    border-radius: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    z-index: -1;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(157, 80, 187, 0.4) 0%, rgba(0, 0, 0, 0) 70%);
+    top: -50px; right: -50px;
+    border-radius: 50%;
+    z-index: 0;
+  }
+  section::after {
+    content: "";
+    position: absolute;
+    width: 250px; height: 250px;
+    background: radial-gradient(circle, rgba(0, 210, 255, 0.3) 0%, rgba(0, 0, 0, 0) 70%);
+    bottom: -30px; left: -30px;
+    border-radius: 50%;
+    z-index: 0;
+  }
+  /* 유리 카드 본체 */
+  .glass-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 40px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   h1 {
     font-size: 45px;
-    color: #00d2ff;
+    color: #ffffff;
     margin: 0 0 15px 0;
-    text-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
     font-weight: 800;
+    letter-spacing: -1px;
   }
   h2, h3 {
     font-size: 28px;
-    color: #9d50bb;
+    color: #00d2ff;
     margin: 5px 0;
     font-weight: 700;
   }
   p, li {
     font-size: 18px;
-    color: #e0e0e0;
+    color: #f0f0f0;
     font-weight: 400;
     line-height: 1.5;
     margin: 5px 0;
@@ -53,44 +78,55 @@ style: |
     list-style: none;
   }
   li::before {
-    content: "✦";
+    content: "●";
     color: #00d2ff;
     display: inline-block;
     width: 1.5em;
     margin-left: -1.5em;
+    font-size: 0.8em;
   }
   img {
     max-height: 220px;
     width: auto;
     display: block;
     margin: 15px auto;
-    border-radius: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
   }
   header {
     top: 30px;
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.5);
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 600;
     letter-spacing: 2px;
+    z-index: 2;
   }
   footer {
     bottom: 30px;
     font-size: 11px;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 600;
     letter-spacing: 1px;
+    z-index: 2;
   }
 ---
 
+<div class="glass-card">
+
 # 네모 상가 데이터 보고서
-### 글래스모피즘 에디션
+### 정통 글래스모피즘 에디션
+
+</div>
 
 <!-- 
 발표자 노트 (2분):
-안녕하십니까. 이번 보고서는 투명하고 세련된 유리 질감을 살린 '글래스모피즘' 스타일로 제작되었습니다. 데이터의 투명성과 비즈니스의 미래지향적인 가치를 담아내고자 했습니다. 지금부터 프리미엄 대시보드 스타일의 슬라이드와 함께 강남 상권의 인사이트를 공유하겠습니다.
+사용자님께서 제안해주신 정통 글래스모피즘 스타일을 완벽하게 재현했습니다. 딥한 배경 위로 떠오른 투명한 유리 카드와 배경의 은은한 조명이 조화를 이루어, 분석 데이터의 신뢰도를 시각적으로 격상시켰습니다.
 -->
 
 ---
+
+<div class="glass-card">
 
 # 00. 목차
 
@@ -100,12 +136,11 @@ style: |
 - 04. 매물 제목 키워드 분석
 - 05. 비즈니스 전략 제안
 
-<!-- 
-발표자 노트 (2분):
-오늘의 분석 흐름입니다. 데이터의 신뢰성을 확인하는 개요부터, 핵심 수치 요약, 그리고 글래스모피즘 스타일로 더욱 돋보이는 10가지 시각화 분석을 차례로 보시겠습니다.
--->
+</div>
 
 ---
+
+<div class="glass-card">
 
 # 01. 데이터 개요
 
@@ -114,12 +149,11 @@ style: |
 - 중복 데이터: 0건 (완벽한 정제)
 - 분석 중심: 강남권 상업용 부동산
 
-<!-- 
-발표자 노트 (2분):
-우리가 분석한 데이터는 강남권을 중심으로 한 2,169건의 실제 매물입니다. 중복이나 오류가 없는 깨끗한 데이터셋을 바탕으로 했기에, 여기서 도출된 인사이트들은 실제 시장의 흐름을 매우 정확하게 반영하고 있습니다.
--->
+</div>
 
 ---
+
+<div class="glass-card">
 
 # 02. 핵심 지표 요약
 
@@ -128,132 +162,121 @@ style: |
 - 평균 권리금: 3,862만 원
 - 평균 면적: 136㎡ (약 41평)
 
-<!-- 
-발표자 노트 (2분):
-강남 상가 시장을 대표하는 숫자들입니다. 평균 보증금 5,760만 원, 월세 440만 원 수준입니다. 이 지표들은 강남이라는 특수 상권이 가진 높은 가치와 그에 따른 진입 장벽을 동시에 보여줍니다.
--->
+</div>
 
 ---
+
+<div class="glass-card">
 
 # 03. 업종별 분포
 ![center](images/01_large_code_freq.png)
 - 주요 업종: 기타, 음식점, 서비스업 순
 - 시사점: 전통적인 먹거리 상권의 높은 경쟁 강도
 
-<!-- 
-발표자 노트 (2분):
-대분류 업종분포입니다. 음식점과 서비스업의 비중이 압도적으로 높습니다. 이는 상가 시장이 얼마나 치열한 레드오션인지를 보여주는 지표이며, 차별화된 전략 없이는 생존이 어려움을 시사합니다.
--->
+</div>
 
 ---
+
+<div class="glass-card">
 
 # 03. 보증금 분포 분석
 ![center](images/02_deposit_dist.png)
 - 전형적인 롱테일(Long-tail) 분포
 - 중앙값(50%): 4,000만 원 선 형성
 
-<!-- 
-발표자 노트 (2분):
-보증금의 분포를 보십시오. 대부분의 매물이 왼쪽 하단 가격대에 밀집해 있지만, 상위권 매물은 기하급수적으로 높은 보증금을 형성하고 있습니다. 이는 상가 시장의 양극화 현상을 여실히 드러냅니다.
--->
+</div>
 
 ---
+
+<div class="glass-card">
 
 # 03. 면적 대비 월세
 ![center](images/03_size_rent_scatter.png)
 - 상관관계: 0.15 (매우 낮음)
 - 인사이트: 면적보다 '입지'가 임대료의 핵심
 
-<!-- 
-발표자 노트 (2분):
-면적과 월세의 상관관계 분석 결과입니다. 0.15라는 낮은 수치는 상가 임대료가 단순히 면적에 비례하지 않음을 뜻합니다. 평수보다 '어디에 위치하느냐'가 가격 결정의 80% 이상을 차지합니다.
--->
+</div>
 
 ---
+
+<div class="glass-card">
 
 # 03. 층수별 임대료 차이
 ![center](images/04_floor_rent_avg.png)
 - 1층 매물의 압도적 우위 확인
 - 접근성 프리미엄이 가격에 그대로 반영
 
-<!-- 
-발표자 노트 (2분):
-층수별 임대료입니다. 1층의 가치가 데이터로 명확히 증명됩니다. 하지만 배달 중심이나 목적형 방문 업종이라면, 월세가 훨씬 저렴한 2층이나 지하층을 선택하는 것이 영리한 전략이 될 수 있습니다.
--->
+</div>
 
 ---
+
+<div class="glass-card">
 
 # 03. 권리금 현황
 ![center](images/05_state_premium_box.png)
 - 상가 상태에 따른 극단적 이상치 존재
 - 진입 시 권리금 리스크 검토 필수
 
-<!-- 
-발표자 노트 (2분):
-권리금의 분포입니다. 권리금은 법적 보호가 어려운 만큼 리스크가 큽니다. 데이터에 나타난 극단적인 고액 권리금 매물들은 해당 입지의 가치를 반영하지만, 동시에 투자 회수 가능성을 냉정히 따져봐야 함을 경고합니다.
--->
+</div>
 
 ---
+
+<div class="glass-card">
 
 # 03. 거래 형태 비중
 ![center](images/06_price_type_pie.png)
 - 월세 매물이 전체의 99% 이상 차지
 - 현금 흐름 중심의 사업 계획 필요
 
-<!-- 
-발표자 노트 (2분):
-거래 형태입니다. 전세는 거의 존재하지 않으며 월세가 시장을 지배합니다. 이는 임차인에게 매달 고정적인 비용 지출을 강요하므로, 철저한 매출 목표와 현금 흐름 관리가 사업 성공의 열쇠입니다.
--->
+</div>
 
 ---
+
+<div class="glass-card">
 
 # 03. 인기 업종 TOP 20
 ![center](images/07_middle_code_top20.png)
 - 카페 및 한식 업종이 시장 주도
 - 높은 교체율을 보이는 과열 경쟁 섹션
 
-<!-- 
-발표자 노트 (2분):
-중분류 업종 순위입니다. 카페와 한식당이 가장 많습니다. 인기가 많은 만큼 폐업률도 높은 구간이기에, 자신만의 독보적인 킬러 콘텐츠가 없다면 이 거대한 차트의 한 칸으로 사라질 위험이 큽니다.
--->
+</div>
 
 ---
+
+<div class="glass-card">
 
 # 03. 조회수와 찜 수
 ![center](images/08_view_favorite_scatter.png)
 - 온라인 노출도가 실제 관심도로 직결
 - 마케팅 데이터 기반의 매칭 효율성 증명
 
-<!-- 
-발표자 노트 (2분):
-디지털 마케팅 데이터입니다. 조회수가 높은 매물이 찜 수도 비례해서 높습니다. 매물을 빨리 처분하거나 좋은 임차인을 구하고 싶다면, 플랫폼 내 노출 최적화가 필수적임을 데이터가 증명합니다.
--->
+</div>
 
 ---
+
+<div class="glass-card">
 
 # 03. 월세와 관리비 관계
 ![center](images/09_rent_maintenance_scatter.png)
 - 두 변수 간의 독립적 상관관계 확인
 - 총 점유 비용(Total Cost) 산출의 중요성
 
-<!-- 
-발표자 노트 (2분):
-월세와 관리비의 관계입니다. 월세가 높다고 무조건 관리비가 높은 것은 아닙니다. 임차인은 겉으로 보이는 임대료만 볼 것이 아니라, 숨은 관리비를 포함한 실제 총 지출액을 반드시 확인해야 합니다.
--->
+</div>
 
 ---
+
+<div class="glass-card">
 
 # 04. 핵심 키워드 분석
 ![center](images/11_text_keyword_tfidf.png)
 - 주요 키워드: 무권리, 역세권, 대로변
 - 고객 유입을 결정짓는 핵심 언어 추출
 
-<!-- 
-발표자 노트 (2분):
-제목 키워드 분석 결과입니다. '무권리', '역세권' 같은 단어들이 고객의 마음을 움직입니다. 매물 등록 시 이러한 핵심 키워드를 어떻게 전략적으로 배치하느냐가 노출과 전환의 성패를 가릅니다.
--->
+</div>
 
 ---
+
+<div class="glass-card">
 
 # 05. 종합 전략 제안
 
@@ -262,19 +285,15 @@ style: |
 - [3] 총비용 투명성 강화를 통한 신뢰 확보
 - [4] 실시간 상권 트렌드 모니터링
 
-<!-- 
-발표자 노트 (2분):
-마지막 결론입니다. 데이터 기반의 정교한 가치 평가, 키워드 중심의 레이어드 마케팅, 그리고 비용 최적화가 필요합니다. 글래스모피즘 스타일의 투명하고 명확한 데이터 분석으로 비즈니스의 성공을 이끄시기 바랍니다.
--->
+</div>
 
 ---
+
+<div class="glass-card">
 
 # Q & A
 
 ### 감사합니다.
 ### 글래스모피즘 에디션 종료.
 
-<!-- 
-발표자 노트 (2분):
-발표를 마칩니다. 세련된 글래스모피즘 스타일로 풀어낸 이번 분석 결과가 여러분의 의사결정에 큰 도움이 되었기를 바랍니다. 질문이 있으시면 편하게 말씀해 주세요. 감사합니다.
--->
+</div>
