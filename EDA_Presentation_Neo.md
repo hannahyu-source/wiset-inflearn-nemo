@@ -2,83 +2,99 @@
 marp: true
 theme: default
 paginate: true
-backgroundColor: #fffef0
-header: "NEMO EDA : RISOGRAPH EDITION"
-footer: "© 2026 ANALOG DATA LAB"
+backgroundColor: #FAF9F6
+header: "NEMO EDA : RISOGRAPH AUTHENTIC"
+footer: "PRINTED BY ANALOG DATA LAB"
 style: |
   section {
-    font-family: 'Arial Black', sans-serif;
-    background-color: #fffef0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-    padding: 80px 60px 110px 60px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #FAF9F6;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E");
+    padding: 80px 70px 110px 70px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border: none;
+    color: #222;
   }
   h1 {
-    font-size: 50px;
-    color: #FF2D55;
+    font-size: 55px;
+    color: #FF48B0;
     text-transform: uppercase;
-    margin: 0 0 20px 0;
-    text-shadow: 3px 3px 0px #00AFFF;
-    line-height: 1.1;
+    margin: 0 0 15px 0;
+    mix-blend-mode: multiply;
+    letter-spacing: -1px;
+    line-height: 1.0;
   }
   h2, h3 {
-    font-size: 28px;
-    color: #00AFFF;
-    margin: 10px 0;
-    text-shadow: 2px 2px 0px #FFE000;
+    font-size: 32px;
+    color: #0078BF;
+    margin: 5px 0;
+    mix-blend-mode: multiply;
+    font-weight: 900;
   }
   p, li {
-    font-size: 19px;
+    font-size: 18px;
     color: #333;
-    font-weight: 700;
-    line-height: 1.3;
-    margin: 6px 0;
+    font-weight: 600;
+    line-height: 1.4;
+    margin: 5px 0;
   }
   ul {
-    margin-left: 20px;
+    margin-left: 25px;
+    list-style: none;
   }
   li::before {
-    content: "●";
-    color: #FF2D55;
+    content: "■";
+    color: #FF48B0;
     display: inline-block;
-    width: 1em;
-    margin-left: -1em;
+    width: 1.2em;
+    margin-left: -1.2em;
+    font-size: 0.8em;
   }
   img {
     max-height: 220px;
     width: auto;
     display: block;
-    margin: 10px auto;
-    filter: contrast(1.1) brightness(1.05);
+    margin: 15px auto;
+    filter: contrast(1.2) sepia(0.2);
     mix-blend-mode: multiply;
-    border: 3px solid #00AFFF;
-    box-shadow: 6px 6px 0px #FF2D55;
+    border: none;
+    box-shadow: 10px 10px 0px rgba(0, 120, 191, 0.2);
   }
   header {
     top: 30px;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 900;
-    color: #FF2D55;
-    border-bottom: 2px solid #FF2D55;
+    color: #FF48B0;
+    letter-spacing: 2px;
+    opacity: 0.7;
   }
   footer {
     bottom: 30px;
-    font-size: 14px;
+    font-size: 11px;
     font-weight: 900;
-    color: #00AFFF;
-    border-top: 2px solid #00AFFF;
+    color: #0078BF;
+    letter-spacing: 1px;
+    opacity: 0.7;
+  }
+  /* 리소그래프 겹침 효과 레이어 */
+  section::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: radial-gradient(#FF48B0 0.5px, transparent 0.5px);
+    background-size: 3px 3px;
+    opacity: 0.03;
+    pointer-events: none;
   }
 ---
 
 # NEMO EDA REPORT
-### RISOGRAPH PRINT EDITION
+### RISOGRAPH AUTHENTIC
 
 <!-- 
 발표자 노트 (2분):
-안녕하십니까. 이번 보고서는 아날로그 인쇄 기법인 '리소그래프' 스타일을 적용한 특별판입니다. 잉크의 질감과 겹침 효과를 통해 데이터의 역동성을 표현했습니다. 디자인은 화려하지만, 내용은 그 어느 때보다 실무적이고 날카롭게 구성했습니다. 리소그래프 특유의 감성과 함께 네모 상가 데이터의 깊은 통찰력을 느껴보시기 바랍니다.
+네모 데이터 분석 팀입니다. 이번 리소그래프 에디션은 인쇄상의 불완전함이 주는 미학을 강조했습니다. 핑크와 블루 잉크가 겹치며 만들어내는 독특한 색감을 즐기시며, 데이터 이면에 숨겨진 비즈니스 인사이트를 탐구해 보시기 바랍니다.
 -->
 
 ---
@@ -93,7 +109,7 @@ style: |
 
 <!-- 
 발표자 노트 (2분):
-전체 목차입니다. 데이터의 기초 체력을 확인하는 개요부터, 핵심 시각화 10선, 그리고 TF-IDF를 이용한 키워드 분석까지 준비했습니다. 리소그래프의 강렬한 색감처럼, 각각의 섹션이 여러분의 머릿속에 선명하게 남을 수 있도록 핵심 위주로 전달하겠습니다.
+오늘의 분석 여정입니다. 깨끗하게 정제된 데이터 개요부터, 리소그래프의 강렬한 색감으로 재탄생한 10가지 시각화 인사이트를 차례로 만나보시겠습니다.
 -->
 
 ---
@@ -102,12 +118,12 @@ style: |
 
 - TOTAL ROWS: 2,169
 - TOTAL COLS: 40
-- DUPES: 0 (PERFECT)
+- DUPES: 0 (CLEAN PRINT)
 - FOCUS: GANGNAM COMMERCIAL
 
 <!-- 
 발표자 노트 (2분):
-데이터 품질입니다. 강남권 상가 매물 2,169건을 전수 분석했습니다. 중복이나 결측치가 거의 없는 완벽한 데이터셋을 기반으로 했기에, 여기서 도출된 결과들은 실제 시장의 흐름을 매우 정확하게 반영합니다.
+우리의 분석 기반은 탄탄합니다. 강남권 2,169건의 실제 데이터를 정교하게 인쇄하듯 분석했습니다. 데이터의 선명함이 곧 전략의 선명함입니다.
 -->
 
 ---
@@ -121,7 +137,7 @@ style: |
 
 <!-- 
 발표자 노트 (2분):
-평균 보증금 5,760만 원, 평균 월세 440만 원. 이 숫자들이 강남 상가 시장의 현재 주소입니다. 권리금 또한 4,000만 원 가까이 형성되어 있어 진입 장벽이 상당함을 알 수 있습니다. 이 숫자들을 기준점으로 삼아 이어지는 시각화 분석을 보시면 더욱 흥미로울 것입니다.
+숫자로 보는 시장입니다. 보증금 5,760만 원, 월세 440만 원. 이 숫자들이 의미하는 경제적 중량감을 리소그래프의 묵직한 잉크 질감으로 표현했습니다.
 -->
 
 ---
@@ -129,11 +145,11 @@ style: |
 # 03. SECTOR FREQ
 ![center](images/01_large_code_freq.png)
 - TOP: OTHER, FOOD, SERVICE
-- HIGH COMPETITION MARKET
+- MARKET SATURATION ANALYSIS
 
 <!-- 
 발표자 노트 (2분):
-업종별 분포 시각화입니다. 리소그래프 특유의 색감으로 강조된 차트를 보십시오. 음식점과 서비스업의 비중이 압도적입니다. 레드오션에서의 생존 전략이 그만큼 절실하다는 신호이기도 합니다.
+업종별 분포입니다. 선명한 잉크가 겹치듯, 다양한 업종들이 밀집해 있습니다. 특히 음식점과 서비스업의 비중은 시장의 치열함을 보여줍니다.
 -->
 
 ---
@@ -145,7 +161,7 @@ style: |
 
 <!-- 
 발표자 노트 (2분):
-보증금 분포입니다. 낮은 가격대에 매물이 집중되어 있지만, 오른쪽으로 갈수록 가격이 급상승하는 전형적인 롱테일 구조입니다. 대다수의 창업자가 4,000만 원에서 6,000만 원 사이의 보증금 구간에서 기회를 찾고 있음을 보여줍니다.
+보증금 분포 히스토그램입니다. 대부분의 기회는 왼쪽의 밀집 구간에 있지만, 오른쪽으로 갈수록 하이엔드 시장의 문턱이 급격히 높아짐을 알 수 있습니다.
 -->
 
 ---
@@ -157,7 +173,7 @@ style: |
 
 <!-- 
 발표자 노트 (2분):
-면적과 월세의 상관관계입니다. 0.15라는 낮은 수치는 상가 임대료가 단순히 크기에 비례하지 않음을 증명합니다. '얼마나 넓으냐'보다 '어디에 있느냐'가 가격의 80% 이상을 결정합니다.
+면적과 월세의 상관관계입니다. 잉크가 흩뿌려진 듯한 산점도를 보십시오. 면적보다는 입지 프리미엄이 월세를 결정하는 핵심 변수임이 드러납니다.
 -->
 
 ---
@@ -169,7 +185,7 @@ style: |
 
 <!-- 
 발표자 노트 (2분):
-층수별 임대료입니다. 1층의 압도적인 우위를 보십시오. 접근성이 곧 임대료로 직결됩니다. 하지만 목적형 업종이라면 2층이나 지하를 선택해 비용을 절감하는 영리한 전략이 필요합니다.
+층수별 가치입니다. 1층 상가의 압도적인 접근성이 핑크색 바 차트로 강조되어 있습니다. 비즈니스 성격에 맞는 최적의 층수를 선택하는 것이 고정비 절감의 핵심입니다.
 -->
 
 ---
@@ -181,7 +197,7 @@ style: |
 
 <!-- 
 발표자 노트 (2분):
-권리금 현황입니다. 상가 상태에 따라 권리금의 편차가 매우 큽니다. 리스크가 큰 영역인 만큼 데이터 기반의 냉정한 가치 평가가 선행되어야 합니다.
+권리금 박스플롯입니다. 극단적인 이상치들이 존재하는 상급 매물 시장의 문턱을 확인하십시오. 철저한 리스크 관리가 필요한 영역입니다.
 -->
 
 ---
@@ -189,11 +205,11 @@ style: |
 # 03. PRICE TYPE
 ![center](images/06_price_type_pie.png)
 - RENT DOMINANCE (99%)
-- CASH FLOW STRATEGY REQUIRED
+- CASH FLOW STRATEGY
 
 <!-- 
 발표자 노트 (2분):
-거래 형태입니다. 전세는 멸종 수준이고 오직 월세뿐입니다. 매달 발생하는 고정 비용을 감당할 수 있는 현금 흐름 확보가 사업 성패의 열쇠입니다.
+거래 형태 비중입니다. 월세 중심의 시장 구조는 매달의 현금 흐름 관리가 사업의 생명선임을 시사합니다.
 -->
 
 ---
@@ -205,7 +221,7 @@ style: |
 
 <!-- 
 발표자 노트 (2분):
-중분류 업종 분석입니다. 한식과 카페가 시장을 주도합니다. 경쟁이 치열한 만큼 차별화된 키워드와 마케팅 없이는 살아남기 힘든 구간입니다.
+세부 업종 순위입니다. 가장 인기가 많은 업종일수록 차별화된 마케팅 키워드가 필수적입니다.
 -->
 
 ---
@@ -217,7 +233,7 @@ style: |
 
 <!-- 
 발표자 노트 (2분):
-조회수와 찜 수의 관계입니다. 많이 보여지는 매물이 결국 선택받습니다. 온라인 플랫폼에서의 노출 전략이 실제 계약으로 이어지는 결정적인 고리임을 데이터가 증명합니다.
+디지털 지표 분석입니다. 조회수가 높은 매물이 찜 수도 높다는 정직한 데이터를 통해 온라인 노출의 중요성을 다시 확인합니다.
 -->
 
 ---
@@ -229,7 +245,7 @@ style: |
 
 <!-- 
 발표자 노트 (2분):
-월세와 관리비입니다. 두 수치는 독립적으로 움직이는 경우가 많습니다. 임대료만 보고 계약했다가는 관리비 폭탄을 맞을 수 있으니, 반드시 총 점유 비용을 합산하여 분석해야 합니다.
+월세와 관리비의 상관관계입니다. 겉으로 보이는 임대료뿐만 아니라 숨은 관리비까지 포함한 '총 점유 비용'을 산출하는 것이 스마트한 임차인의 자세입니다.
 -->
 
 ---
@@ -241,7 +257,7 @@ style: |
 
 <!-- 
 발표자 노트 (2분):
-핵심 키워드 분석입니다. 무권리, 역세권, 대로변. 이 단어들이 고객의 클릭을 부릅니다. 여러분의 매물을 설명할 때 이 강력한 키워드들을 어떻게 활용할지 고민해 보십시오.
+텍스트 분석 결과입니다. '무권리', '역세권' 등 고객의 시선을 끄는 핵심 키워드들이 리소그래프 스타일로 선명하게 추출되었습니다.
 -->
 
 ---
@@ -255,7 +271,7 @@ style: |
 
 <!-- 
 발표자 노트 (2분):
-최종 전략입니다. 데이터에 기반한 가치 평가, 키워드 중심의 마케팅, 총비용 최적화, 그리고 트렌드 대응. 이 네 가지가 네모 상가 시장에서 승리하는 공식입니다. 리소그래프처럼 선명한 전략으로 성공을 거두시기 바랍니다.
+종합 전략입니다. 데이터에 기반한 가치 평가와 레이어드 마케팅, 그리고 비용 최적화. 이 세 가지가 리소그래프처럼 선명한 비즈니스 성공을 보장할 것입니다.
 -->
 
 ---
@@ -267,5 +283,5 @@ style: |
 
 <!-- 
 발표자 노트 (2분):
-긴 시간 경청해 주셔서 감사합니다. 이번 리소그래프 에디션 보고서가 여러분의 비즈니스에 선명한 영감을 주었기를 바랍니다. 질문이 있으시면 자유롭게 말씀해 주십시오. 감사합니다.
+발표를 마칩니다. 리소그래프 특유의 따뜻하면서도 강렬한 느낌이 여러분의 비즈니스에 새로운 영감이 되었기를 바랍니다. 감사합니다.
 -->
