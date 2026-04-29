@@ -59,14 +59,24 @@ style: |
     margin: 4px 0;
   }
   ul {
-    margin-left: 20px;
-    list-style-type: disc;
+    margin-left: 25px !important;
+    padding-left: 0 !important;
+    list-style: none !important;
   }
-  li::before {
-    display: none !important; /* Marp 기본 가짜 불릿(왼쪽 동그라미) 강제 제거 */
+  li {
+    list-style: none !important;
+    background-image: none !important; /* 혹시 모를 Marp 배경 이미지 불릿 차단 */
   }
   li::marker {
-    color: #00d2ff;
+    content: none !important; /* 기본 브라우저 마커 완전 차단 */
+    display: none !important;
+  }
+  li::before {
+    content: "●" !important; /* 오직 이것 하나만 표시 */
+    display: inline-block !important;
+    color: #00d2ff !important;
+    width: 1.2em !important;
+    margin-left: -1.2em !important;
   }
   img {
     max-height: 280px;
