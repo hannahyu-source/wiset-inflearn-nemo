@@ -59,11 +59,14 @@ style: |
     margin: 4px 0;
   }
   ul {
-    margin-left: 30px;
-    list-style-type: disc; /* 기본 불릿 사용 */
+    margin-left: 20px;
+    list-style-type: disc;
+  }
+  li::before {
+    display: none !important; /* Marp 기본 가짜 불릿(왼쪽 동그라미) 강제 제거 */
   }
   li::marker {
-    color: #00d2ff; /* 불릿 색상만 변경 */
+    color: #00d2ff;
   }
   img {
     max-height: 280px;
