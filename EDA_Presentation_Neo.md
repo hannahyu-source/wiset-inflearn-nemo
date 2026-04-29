@@ -9,8 +9,8 @@ style: |
   section {
     font-family: 'Arial Black', Impact, sans-serif;
     color: #000000;
-    padding: 80px 50px 100px 50px;
-    border: 10px solid #000000;
+    padding: 70px 40px 110px 40px;
+    border: 6px solid #000000;
     background-color: #F5F500;
     display: flex;
     flex-direction: column;
@@ -18,71 +18,72 @@ style: |
   }
   h1 {
     font-family: 'Arial Black', Impact, sans-serif;
-    font-size: 45px;
+    font-size: 38px;
     color: #000000;
     text-transform: uppercase;
-    border: 4px solid #000000;
+    border: 3px solid #000000;
     background-color: #FFFFFF;
-    padding: 10px 20px;
+    padding: 8px 16px;
     display: inline-block;
-    box-shadow: 8px 8px 0px #000000;
-    margin-bottom: 20px;
+    box-shadow: 4px 4px 0px #000000;
+    margin-bottom: 15px;
     margin-top: 0;
   }
   h2, h3 {
     font-family: 'Arial Black', Impact, sans-serif;
-    font-size: 30px;
+    font-size: 26px;
     background-color: #CCFF00;
-    border: 3px solid #000000;
-    padding: 5px 15px;
+    border: 2px solid #000000;
+    padding: 4px 12px;
     display: inline-block;
-    box-shadow: 5px 5px 0px #000000;
-    margin: 5px 0;
+    box-shadow: 3px 3px 0px #000000;
+    margin: 4px 0;
   }
   p, li {
     font-family: 'Courier New', Courier, monospace;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 18px;
     background-color: #FFFFFF;
     border: 2px solid #000000;
-    padding: 4px 10px;
-    margin: 5px 0;
-    box-shadow: 3px 3px 0px #000000;
+    padding: 3px 8px;
+    margin: 4px 0;
+    box-shadow: 2px 2px 0px #000000;
     list-style: none;
-    line-height: 1.2;
+    line-height: 1.1;
   }
   img {
-    border: 4px solid #000000;
-    box-shadow: 8px 8px 0px #000000;
+    border: 3px solid #000000;
+    box-shadow: 4px 4px 0px #000000;
     background-color: #FFFFFF;
-    max-height: 280px;
-    margin: 10px auto;
+    max-height: 240px;
+    max-width: 90%;
+    margin: 8px auto;
     display: block;
     object-fit: contain;
   }
   header {
-    top: 20px;
-    left: 50px;
+    top: 15px;
+    left: 40px;
     font-family: 'Courier New', Courier, monospace;
     font-weight: 900;
-    font-size: 18px;
+    font-size: 14px;
     color: #000000;
     text-transform: uppercase;
     background: #FFFFFF;
-    padding: 2px 10px;
+    padding: 1px 8px;
     border: 2px solid #000000;
   }
   footer {
-    bottom: 20px;
-    right: 50px;
+    bottom: 15px;
+    right: 40px;
     font-family: 'Courier New', Courier, monospace;
     font-weight: 900;
-    font-size: 16px;
+    font-size: 12px;
     color: #000000;
     background: #FF2D55;
-    padding: 2px 10px;
+    padding: 1px 8px;
     border: 2px solid #000000;
-    box-shadow: 4px 4px 0px #000000;
+    box-shadow: 3px 3px 0px #000000;
   }
 ---
 
@@ -140,7 +141,7 @@ style: |
 ---
 
 # 03. SECTOR FREQ
-![w:700 center](images/01_large_code_freq.png)
+![center](images/01_large_code_freq.png)
 - TOP: OTHER, FOOD, SERVICE
 - INSIGHT: HIGH COMPETITION ZONE
 
@@ -152,7 +153,7 @@ style: |
 ---
 
 # 03. DEPOSIT DIST
-![w:700 center](images/02_deposit_dist.png)
+![center](images/02_deposit_dist.png)
 - LONG TAIL DISTRIBUTION
 - 50% MEDIAN: 4,000M KRW
 
@@ -164,7 +165,7 @@ style: |
 ---
 
 # 03. SIZE VS RENT
-![w:700 center](images/03_size_rent_scatter.png)
+![center](images/03_size_rent_scatter.png)
 - CORR: 0.15 (EXTREMELY LOW)
 - LOCATION > SQUARE FOOTAGE
 
@@ -176,7 +177,7 @@ style: |
 ---
 
 # 03. FLOOR VS RENT
-![w:700 center](images/04_floor_rent_avg.png)
+![center](images/04_floor_rent_avg.png)
 - 1ST FLOOR IS THE ABSOLUTE KING
 - PREMIUM FOR GROUND ACCESS
 
@@ -188,7 +189,7 @@ style: |
 ---
 
 # 03. PREMIUM BY STATE
-![w:700 center](images/05_state_premium_box.png)
+![center](images/05_state_premium_box.png)
 - EXTREME OUTLIERS IN 'A' CLASS
 - ENTRY BARRIER IS BRUTAL
 
@@ -200,7 +201,7 @@ style: |
 ---
 
 # 03. PRICE TYPE
-![w:600 center](images/06_price_type_pie.png)
+![center](images/06_price_type_pie.png)
 - RENT DOMINANCE (99.9%)
 - CASH FLOW OVER ASSET
 
@@ -212,7 +213,7 @@ style: |
 ---
 
 # 03. TOP 20 CATEGORY
-![w:700 center](images/07_middle_code_top20.png)
+![center](images/07_middle_code_top20.png)
 - CAFE & KOREAN FOOD LEAD
 - HIGH CHURN RATE SECTORS
 
@@ -224,7 +225,7 @@ style: |
 ---
 
 # 03. VIEW VS FAV
-![w:700 center](images/08_view_favorite_scatter.png)
+![center](images/08_view_favorite_scatter.png)
 - "HOT" PROPERTY TRACKER
 - ENGAGEMENT = CONVERSION
 
@@ -236,7 +237,7 @@ style: |
 ---
 
 # 03. RENT VS MAINT
-![w:700 center](images/09_rent_maintenance_scatter.png)
+![center](images/09_rent_maintenance_scatter.png)
 - INDEPENDENT VARIABLES
 - TOTAL OCCUPANCY COST CHECK
 
@@ -248,7 +249,7 @@ style: |
 ---
 
 # 04. TOP KEYWORDS
-![w:600 center](images/11_text_keyword_tfidf.png)
+![center](images/11_text_keyword_tfidf.png)
 - NO PREMIUM, SUBWAY, MAIN ROAD
 - SELLING STABILITY & ACCESS
 
