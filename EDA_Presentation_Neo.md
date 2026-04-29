@@ -59,18 +59,14 @@ style: |
     margin: 4px 0;
   }
   ul {
-    margin-left: 20px;
-    list-style: none;
+    margin-left: 30px;
+    list-style-type: disc; /* 기본 불릿 사용 */
   }
-  li::before {
-    content: "●";
-    color: #00d2ff;
-    display: inline-block;
-    width: 1.5em;
-    margin-left: -1.5em;
+  li::marker {
+    color: #00d2ff; /* 불릿 색상만 변경 */
   }
   img {
-    max-height: 280px; /* 10% 추가 확대 (250px -> 280px) */
+    max-height: 280px;
     width: auto;
     display: block;
     margin: 12px auto;
