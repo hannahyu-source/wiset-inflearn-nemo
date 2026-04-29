@@ -5,6 +5,41 @@ paginate: true
 backgroundColor: #fff
 header: '네모 상가 데이터 심층 EDA 보고서'
 footer: '© 2026 Nemo Data Analysis Team'
+style: |
+  section {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 70px 50px 80px 50px; /* 헤더와 푸터 공간 확보 */
+  }
+  h1 {
+    font-size: 1.6em;
+    color: #1a4a7c;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #1a4a7c;
+  }
+  h3 {
+    font-size: 1.1em;
+    color: #444;
+  }
+  p, ul {
+    font-size: 0.85em;
+    margin-bottom: 10px;
+  }
+  img {
+    max-height: 380px; /* 이미지가 텍스트를 밀어내지 않도록 높이 제한 */
+    display: block;
+    margin: 0 auto 15px auto;
+    object-fit: contain;
+  }
+  header {
+    top: 20px;
+    font-size: 0.7em;
+  }
+  footer {
+    bottom: 20px;
+    font-size: 0.7em;
+  }
 ---
 
 # 네모 상가 데이터 심층 EDA 보고서
