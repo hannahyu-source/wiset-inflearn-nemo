@@ -2,100 +2,92 @@
 marp: true
 theme: default
 paginate: true
-backgroundColor: #FAF9F6
-header: "네모 상가 데이터 심층 분석 : 리소그래프 에디션"
-footer: "아날로그 데이터 랩 발행"
+backgroundColor: #1a1a2e
+header: "NEMO EDA : GLASSMORPHISM EDITION"
+footer: "© 2026 PREMIUM DATA DASHBOARD"
 style: |
   section {
-    font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
-    background-color: #FAF9F6;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E");
+    font-family: 'Malgun Gothic', sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
     padding: 80px 70px 110px 70px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    color: #222;
+    color: #ffffff;
     word-break: keep-all;
   }
+  /* 유리 박스 효과 */
+  section::before {
+    content: "";
+    position: absolute;
+    top: 50px; left: 50px; right: 50px; bottom: 80px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: -1;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  }
   h1 {
-    font-size: 48px;
-    color: #FF48B0;
-    text-transform: uppercase;
+    font-size: 45px;
+    color: #00d2ff;
     margin: 0 0 15px 0;
-    mix-blend-mode: multiply;
-    letter-spacing: -1px;
-    line-height: 1.1;
-    font-weight: 900;
+    text-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
+    font-weight: 800;
   }
   h2, h3 {
-    font-size: 30px;
-    color: #0078BF;
+    font-size: 28px;
+    color: #9d50bb;
     margin: 5px 0;
-    mix-blend-mode: multiply;
-    font-weight: 900;
+    font-weight: 700;
   }
   p, li {
     font-size: 18px;
-    color: #333;
-    font-weight: 600;
+    color: #e0e0e0;
+    font-weight: 400;
     line-height: 1.5;
     margin: 5px 0;
   }
   ul {
-    margin-left: 25px;
+    margin-left: 20px;
     list-style: none;
   }
   li::before {
-    content: "■";
-    color: #FF48B0;
+    content: "✦";
+    color: #00d2ff;
     display: inline-block;
-    width: 1.2em;
-    margin-left: -1.2em;
-    font-size: 0.8em;
+    width: 1.5em;
+    margin-left: -1.5em;
   }
   img {
     max-height: 220px;
     width: auto;
     display: block;
     margin: 15px auto;
-    filter: contrast(1.2) sepia(0.2);
-    mix-blend-mode: multiply;
-    border: none;
-    box-shadow: 10px 10px 0px rgba(0, 120, 191, 0.2);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
   }
   header {
     top: 30px;
     font-size: 12px;
-    font-weight: 900;
-    color: #FF48B0;
+    color: rgba(255, 255, 255, 0.5);
     letter-spacing: 2px;
-    opacity: 0.7;
   }
   footer {
     bottom: 30px;
     font-size: 11px;
-    font-weight: 900;
-    color: #0078BF;
+    color: rgba(255, 255, 255, 0.5);
     letter-spacing: 1px;
-    opacity: 0.7;
-  }
-  section::after {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-image: radial-gradient(#FF48B0 0.5px, transparent 0.5px);
-    background-size: 3px 3px;
-    opacity: 0.03;
-    pointer-events: none;
   }
 ---
 
 # 네모 상가 데이터 보고서
-### 리소그래프 에디션
+### 글래스모피즘 에디션
 
 <!-- 
 발표자 노트 (2분):
-안녕하십니까. 네모 데이터 분석 팀입니다. 이번 보고서는 아날로그 인쇄 기법인 리소그래프 스타일을 적용하여, 데이터가 가진 날것의 통찰을 시각적으로 구현했습니다. 핑크와 블루 잉크가 겹치며 만들어내는 독특한 시각적 흐름 속에서, 강남 상권의 핵심 지표들을 함께 살펴보시겠습니다.
+안녕하십니까. 이번 보고서는 투명하고 세련된 유리 질감을 살린 '글래스모피즘' 스타일로 제작되었습니다. 데이터의 투명성과 비즈니스의 미래지향적인 가치를 담아내고자 했습니다. 지금부터 프리미엄 대시보드 스타일의 슬라이드와 함께 강남 상권의 인사이트를 공유하겠습니다.
 -->
 
 ---
@@ -110,7 +102,7 @@ style: |
 
 <!-- 
 발표자 노트 (2분):
-오늘의 분석 순서입니다. 데이터의 신뢰성을 확인하는 개요부터 시작하여, 핵심 수치 요약, 그리고 총 10가지의 정교한 시각화 분석을 통해 시장의 맥락을 짚어내겠습니다. 마지막으로는 AI 기반의 키워드 분석과 전략적 제안으로 마무리하겠습니다.
+오늘의 분석 흐름입니다. 데이터의 신뢰성을 확인하는 개요부터, 핵심 수치 요약, 그리고 글래스모피즘 스타일로 더욱 돋보이는 10가지 시각화 분석을 차례로 보시겠습니다.
 -->
 
 ---
@@ -272,7 +264,7 @@ style: |
 
 <!-- 
 발표자 노트 (2분):
-마지막 결론입니다. 데이터 기반의 정교한 가치 평가, 키워드 중심의 레이어드 마케팅, 그리고 비용 최적화가 필요합니다. 리소그래프의 선명한 색감처럼, 데이터 기반의 명확한 전략으로 비즈니스의 성공을 이끄시기 바랍니다.
+마지막 결론입니다. 데이터 기반의 정교한 가치 평가, 키워드 중심의 레이어드 마케팅, 그리고 비용 최적화가 필요합니다. 글래스모피즘 스타일의 투명하고 명확한 데이터 분석으로 비즈니스의 성공을 이끄시기 바랍니다.
 -->
 
 ---
@@ -280,9 +272,9 @@ style: |
 # Q & A
 
 ### 감사합니다.
-### 리소그래프 에디션 종료.
+### 글래스모피즘 에디션 종료.
 
 <!-- 
 발표자 노트 (2분):
-발표를 마칩니다. 리소그래프 특유의 감각적인 스타일로 풀어낸 이번 분석 결과가 여러분의 의사결정에 큰 도움이 되었기를 바랍니다. 질문이 있으시면 편하게 말씀해 주세요. 감사합니다.
+발표를 마칩니다. 세련된 글래스모피즘 스타일로 풀어낸 이번 분석 결과가 여러분의 의사결정에 큰 도움이 되었기를 바랍니다. 질문이 있으시면 편하게 말씀해 주세요. 감사합니다.
 -->
